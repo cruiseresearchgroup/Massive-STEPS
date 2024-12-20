@@ -21,7 +21,8 @@ python src/preprocess_std.py \
     --categories_file semantic-trails/categories.csv \
     --city_geo_json_file data/sydney/sydney_5750005_overpass.geojson \
     --output_dir data/sydney \
-    --output_file sydney_checkins.csv
+    --output_file sydney_checkins.csv \
+    --min_checkins 2 --min_trails 3
 """
 
 

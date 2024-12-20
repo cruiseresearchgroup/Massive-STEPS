@@ -20,6 +20,7 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("--checkins_file", type=str, required=True)
     parser.add_argument("--dataset_id", type=str, required=True)
+    parser.add_argument("--private", action="store_true")
     args = parser.parse_args()
 
     df = pd.read_csv(args.checkins_file)
@@ -44,13 +45,14 @@ def main():
     results = df.groupby("trail_id").progress_apply(generate_prompts).reset_index(drop=True)
 
     train_df, test_df = train_test_split(results, stratify=results["user_id"], test_size=0.2, random_state=42)
-    train_df, val_df = train_test_split(train_df, stratify=train_df["user_id"], test_size=0.125, random_state=42)
+    train_df, val_df = train_test_split(train_df, test_size=0.125, random_state=42)
 
     train_dataset = Dataset.from_pandas(train_df.reset_index(drop=True))
     val_dataset = Dataset.from_pandas(val_df.reset_index(drop=True))
     test_dataset = Dataset.from_pandas(test_df.reset_index(drop=True))
     dataset = DatasetDict({"train": train_dataset, "validation": val_dataset, "test": test_dataset})
-    dataset.push_to_hub(args.dataset_id)
+    dataset.push_to_hub(args.dataset_id, private=args.private)
+    print(dataset)
 
 
 if __name__ == "__main__":
