@@ -19,15 +19,18 @@
 
 ## Jakarta 🇮🇩
 
-### Download Jakarta GeoJSON
-
+<details>
+<summary>Download Jakarta GeoJSON</summary>
+  
 ```sql
 [out:json];
 relation(6362934);
 out geom;
 ```
+</details>
 
-### Preprocess STD Jakarta Dataset
+<details>
+<summary>Preprocess STD Jakarta Dataset</summary>
 
 ```sh
 python src/preprocess_std.py \
@@ -40,26 +43,32 @@ python src/preprocess_std.py \
     --output_file jakarta_checkins.csv \
     --min_checkins 2 --min_trails 3
 ```
+</details>
 
-### Create Next POI Dataset
+<details>
+<summary>Create Next POI Dataset</summary>
 
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/jakarta/jakarta_checkins.csv \
     --dataset_id w11wo/STD-Jakarta-POI --private
 ```
+</details>
 
 ## Moscow 🇷🇺
 
-### Download Moscow GeoJSON
+<details>
+<summary>Download Moscow GeoJSON</summary>
 
 ```sql
 [out:json];
 relation(2555133);
 out geom;
 ```
+</details>
 
-### Preprocess STD Moscow Dataset
+<details>
+<summary>Preprocess STD Moscow Dataset</summary>
 
 ```sh
 python src/preprocess_std.py \
@@ -72,26 +81,32 @@ python src/preprocess_std.py \
     --output_file moscow_checkins.csv \
     --min_checkins 2 --min_trails 3
 ```
+</details>
 
-### Create Next POI Dataset
+<details>
+<summary>Create Next POI Dataset</summary>
 
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/moscow/moscow_checkins.csv \
     --dataset_id w11wo/STD-Moscow-POI --private
 ```
+</details>
 
 ## São Paulo 🇧🇷
 
-### Download São Paulo GeoJSON
+<details>
+<summary>Download São Paulo GeoJSON</summary>
 
 ```sql
 [out:json];
 relation(298285);
 out geom;
 ```
+</details>
 
-### Preprocess STD São Paulo Dataset
+<details>
+<summary>Preprocess STD São Paulo Dataset</summary>
 
 ```sh
 python src/preprocess_std.py \
@@ -104,26 +119,32 @@ python src/preprocess_std.py \
     --output_file sao_paulo_checkins.csv \
     --min_checkins 2 --min_trails 3
 ```
+</details>
 
-### Create Next POI Dataset
+<details>
+<summary>Create Next POI Dataset</summary>
 
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/sao_paulo/sao_paulo_checkins.csv \
     --dataset_id w11wo/STD-Sao-Paulo-POI --private
 ```
+</details>
 
 ## Shanghai 🇨🇳
 
-### Download Shanghai GeoJSON
+<details>
+<summary>Download Shanghai GeoJSON</summary>
 
 ```sql
 [out:json];
 relation(913067);
 out geom;
 ```
+</details>
 
-### Preprocess STD Shanghai Dataset
+<details>
+<summary>Preprocess STD Shanghai Dataset</summary>
 
 ```sh
 python src/preprocess_std.py \
@@ -136,26 +157,32 @@ python src/preprocess_std.py \
     --output_file shanghai_checkins.csv \
     --min_checkins 2 --min_trails 3
 ```
+</details>
 
-### Create Next POI Dataset
+<details>
+<summary>Create Next POI Dataset</summary>
 
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/shanghai/shanghai_checkins.csv \
     --dataset_id w11wo/STD-Shanghai-POI --private
 ```
+</details>
 
 ## Sydney 🇦🇺
 
-### Download Sydney GeoJSON
+<details>
+<summary>Download Sydney GeoJSON</summary>
 
 ```sql
 [out:json];
 relation(5750005);
 out geom;
 ```
+</details>
 
-### Preprocess STD Sydney Dataset
+<details>
+<summary>Preprocess STD Sydney Dataset</summary>
 
 ```sh
 python src/preprocess_std.py \
@@ -168,11 +195,14 @@ python src/preprocess_std.py \
     --output_file sydney_checkins.csv \
     --min_checkins 2 --min_trails 3
 ```
+</details>
 
-### Create Next POI Dataset
+<details>
+<summary>Create Next POI Dataset</summary>
 
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/sydney/sydney_checkins.csv \
     --dataset_id w11wo/STD-Sydney-POI --private
 ```
+</details>
