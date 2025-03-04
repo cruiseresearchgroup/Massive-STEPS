@@ -33,11 +33,10 @@ def main(args):
     for csv_file in csv_files:
         df = pd.read_csv(csv_file)
         model_name = ".".join(csv_file.stem.split(".")[:-3])
-        plt.plot(df["layer"], df["r2"], linestyle="-", label=model_name)
+        plt.plot(df["layer"] / max(df["layer"]), df["r2"], linestyle="-", label=model_name)
 
     plt.xlabel("Model Depth")
-    plt.ylabel("R² Score")
-    plt.title("NYC Places")
+    plt.ylabel("NYC Map test R²")
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.6)
     fig_save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.png"
