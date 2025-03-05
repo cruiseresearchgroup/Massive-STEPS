@@ -8,7 +8,7 @@ import pandas as pd
 Usage:
 
 python src/plot_graphs.py \
-    --input_dir downloads/ \
+    --input_dir downloads/results/ \
     --entity_type nyc_place \
     --activation_aggregation last \
     --prompt_name empty
@@ -17,7 +17,7 @@ python src/plot_graphs.py \
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("--input_dir", type=str, required=True, default="downloads/")
+    parser.add_argument("--input_dir", type=str, required=True, default="downloads/results/")
     parser.add_argument("--entity_type", type=str)
     parser.add_argument("--activation_aggregation", type=str, default="last")
     parser.add_argument("--prompt_name", type=str, default="empty")
@@ -45,7 +45,7 @@ def main(args):
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.6)
     fig_save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.png"
-    plt.savefig(f"downloads/{fig_save_name}")
+    plt.savefig(path / fig_save_name)
 
 
 if __name__ == "__main__":

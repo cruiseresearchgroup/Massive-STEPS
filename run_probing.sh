@@ -34,7 +34,7 @@ python src/probe_experiment.py \
     --model_checkpoint $MODEL
 
 python src/plot_graphs.py \
-    --input_dir downloads/ \
+    --input_dir downloads/results/ \
     --entity_type $ENTITY_TYPE \
     --activation_aggregation $ACTIVATION_AGGREGATION \
     --prompt_name $PROMPT_NAME

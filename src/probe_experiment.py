@@ -36,7 +36,8 @@ python src/probe_experiment.py \
     --activation_save_path downloads/activation_datasets \
     --activation_aggregation last \
     --prompt_name empty \
-    --model_checkpoint meta-llama/Llama-3.2-1B
+    --model_checkpoint meta-llama/Llama-3.2-1B \
+    --output_dir downloads/results/
 """
 
 
@@ -48,6 +49,7 @@ def parse_args():
     parser.add_argument("--activation_aggregation", type=str, default="last")
     parser.add_argument("--prompt_name", type=str, default="empty")
     parser.add_argument("--model_checkpoint", type=str, default="meta-llama/Llama-3.2-1B")
+    parser.add_argument("--output_dir", type=str, default="downloads/results/")
     return parser.parse_args()
 
 
@@ -148,9 +150,11 @@ def main(args):
     layer_ids = list(scores.keys())
     r2_scores = [scores[layer]["test", "haversine_r2"] for layer in scores]
     results = pd.DataFrame({"layer": layer_ids, "r2": r2_scores})
-    results.to_csv(
-        f"downloads/{model}.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv", index=False
-    )
+
+    output_dir = args.output_dir
+    os.makedirs(output_dir, exist_ok=True)
+    save_name = f"{model}.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv"
+    results.to_csv(os.path.join(output_dir, save_name), index=False)
 
 
 if __name__ == "__main__":
