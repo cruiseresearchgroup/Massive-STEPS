@@ -146,7 +146,7 @@ def main(args):
 
     scores = results["scores"]
     layer_ids = list(scores.keys())
-    r2_scores = [scores[layer]["test", "haversine_r2"] for layer in range(n_layers)]
+    r2_scores = [scores[layer]["test", "haversine_r2"] for layer in scores]
     results = pd.DataFrame({"layer": layer_ids, "r2": r2_scores})
     results.to_csv(
         f"downloads/{model}.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv", index=False

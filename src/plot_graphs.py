@@ -35,8 +35,13 @@ def main(args):
         model_name = ".".join(csv_file.stem.split(".")[:-3])
         plt.plot(df["layer"] / max(df["layer"]), df["r2"], linestyle="-", label=model_name)
 
+    if args.entity_type == "nyc_place":
+        ylabel = "NYC Map test R²"
+    elif args.entity_type == "world_place":
+        ylabel = "World Map test R²"
+
     plt.xlabel("Model Depth")
-    plt.ylabel("NYC Map test R²")
+    plt.ylabel(ylabel)
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.6)
     fig_save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.png"

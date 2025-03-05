@@ -17,6 +17,7 @@ python src/save_activations.py \
     --model_checkpoint meta-llama/Llama-3.2-1B \
     --dataset_save_path downloads/nyc_place_dataset \
     --activation_save_path downloads/activation_datasets \
+    --entity_type nyc_place \
     --activation_aggregation last \
     --prompt_name empty \
     --batch_size 8 \
@@ -31,7 +32,7 @@ def parse_args():
     parser.add_argument("--dataset_save_path", type=str, required=True)
     parser.add_argument("--activation_save_path", type=str, required=True, default="downloads/activation_datasets")
     parser.add_argument("--activation_aggregation", type=str, default="last")
-    parser.add_argument("--entity_type", type=str, default="nyc_place")
+    parser.add_argument("--entity_type", type=str, required=True)
     parser.add_argument("--prompt_name", type=str, default="empty")
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--save_precision", type=int, default=8)

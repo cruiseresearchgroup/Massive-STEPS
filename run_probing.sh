@@ -1,6 +1,6 @@
 ENTITY_FILE=downloads/nyc_place.csv
 ENTITY_TYPE=nyc_place
-DATASET_SAVE_PATH=downloads/nyc_place_dataset
+DATASET_SAVE_PATH=downloads/${ENTITY_TYPE}_dataset
 ACTIVATION_SAVE_PATH=downloads/activation_datasets
 
 MODEL=meta-llama/Llama-2-7b-hf
@@ -10,6 +10,7 @@ PROMPT_NAME=empty
 
 python src/make_prompt_dataset.py \
     --entity_file $ENTITY_FILE \
+    --entity_type $ENTITY_TYPE \
     --model_checkpoint $MODEL \
     --dataset_save_path $DATASET_SAVE_PATH
 
@@ -18,6 +19,7 @@ python src/save_activations.py \
     --dataset_save_path $DATASET_SAVE_PATH \
     --activation_save_path $ACTIVATION_SAVE_PATH \
     --activation_aggregation $ACTIVATION_AGGREGATION \
+    --entity_type $ENTITY_TYPE \
     --prompt_name $PROMPT_NAME \
     --batch_size 8 \
     --save_precision 8 \
