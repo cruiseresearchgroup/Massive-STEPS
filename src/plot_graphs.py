@@ -39,6 +39,11 @@ def main(args):
         ylabel = "NYC Map test R²"
     elif args.entity_type == "world_place":
         ylabel = "World Map test R²"
+    elif args.entity_type.startswith("world_place"):
+        country = args.entity_type.split("_")[-1]
+        ylabel = f"{country} Map test R²"
+    else:
+        raise NotImplementedError
 
     plt.xlabel("Model Depth")
     plt.ylabel(ylabel)

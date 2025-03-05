@@ -11,8 +11,8 @@ import numpy as np
 import pandas as pd
 import torch
 
+from common import load_entity_data
 from probe_evaluation import *
-
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning, message="TypedStorage is deprecated")
@@ -50,6 +50,8 @@ def parse_args():
     parser.add_argument("--prompt_name", type=str, default="empty")
     parser.add_argument("--model_checkpoint", type=str, default="meta-llama/Llama-3.2-1B")
     parser.add_argument("--output_dir", type=str, default="downloads/results/")
+    parser.add_argument("--country", type=str, default=None)
+    parser.add_argument("--continent", type=str, default=None)
     return parser.parse_args()
 
 
@@ -105,7 +107,7 @@ def place_probe_experiment(activations, target, is_test, probe=None, is_lat_lon=
 def main(args):
     model = args.model_checkpoint.split("/")[-1]
     n_layers = MODEL_N_LAYERS[model]
-    entity_df = pd.read_csv(args.entity_file)
+    entity_df = load_entity_data(args.entity_file, args.country, args.continent)
     is_test = entity_df.is_test.values
 
     results = {
@@ -129,16 +131,10 @@ def main(args):
         target = entity_df[["longitude", "latitude"]].values
 
         probe = RidgeCV(alphas=RIDGE_ALPHAS[model], store_cv_values=True)
-
-        is_place = args.entity_type.endswith("place")
-
-        if is_place:
-            probe, scores, projection = place_probe_experiment(activations, target, is_test, probe=probe)
-        else:
-            raise NotImplementedError
+        probe, scores, projection = place_probe_experiment(activations, target, is_test, probe=probe)
 
         probe_direction = probe.coef_.T.astype(np.float16)
-        probe_alphas = probe.cv_values_.mean(axis=(0, 1) if is_place else 0)
+        probe_alphas = probe.cv_values_.mean(axis=(0, 1))
 
         results["scores"][layer] = scores
         results["projections"][layer] = projection

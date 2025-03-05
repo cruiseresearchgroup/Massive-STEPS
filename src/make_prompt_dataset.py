@@ -6,8 +6,9 @@ import re
 
 from transformers import AutoTokenizer
 from datasets import Dataset
-import pandas as pd
 import torch
+
+from common import load_entity_data
 
 """
 Usage:
@@ -26,6 +27,8 @@ def parse_args():
     parser.add_argument("--entity_type", type=str)
     parser.add_argument("--model_checkpoint", type=str, required=True, default="meta-llama/Llama-3.2-1B")
     parser.add_argument("--dataset_save_path", type=str, required=True)
+    parser.add_argument("--country", type=str, default=None)
+    parser.add_argument("--continent", type=str, default=None)
     return parser.parse_args()
 
 
@@ -162,7 +165,7 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model_checkpoint)
     tokenizer.pad_token = tokenizer.eos_token
 
-    entity_df = pd.read_csv(args.entity_file)
+    entity_df = load_entity_data(args.entity_file, args.country, args.continent)
 
     model_name = args.model_checkpoint.split("/")[-1]
     dataset_save_path = os.path.join(args.dataset_save_path, model_name)
@@ -170,7 +173,7 @@ def main(args):
 
     if args.entity_type == "nyc_place":
         prompt_fn = make_nyc_prompt_dataset
-    elif args.entity_type == "world_place":
+    elif args.entity_type.startswith("world_place"):
         prompt_fn = make_world_prompt_dataset
 
     tokenized_dataset = prompt_fn(tokenizer, entity_df)
