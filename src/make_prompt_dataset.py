@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument("--dataset_save_path", type=str, required=True)
     parser.add_argument("--country", type=str, default=None)
     parser.add_argument("--continent", type=str, default=None)
+    parser.add_argument("--remove_outliers", action="store_true")
     return parser.parse_args()
 
 
@@ -165,7 +166,7 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model_checkpoint)
     tokenizer.pad_token = tokenizer.eos_token
 
-    entity_df = load_entity_data(args.entity_file, args.country, args.continent)
+    entity_df = load_entity_data(args.entity_file, args.country, args.continent, args.remove_outliers)
 
     model_name = args.model_checkpoint.split("/")[-1]
     dataset_save_path = os.path.join(args.dataset_save_path, model_name)

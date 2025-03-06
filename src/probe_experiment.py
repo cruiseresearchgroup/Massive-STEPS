@@ -52,6 +52,7 @@ def parse_args():
     parser.add_argument("--output_dir", type=str, default="downloads/results/")
     parser.add_argument("--country", type=str, default=None)
     parser.add_argument("--continent", type=str, default=None)
+    parser.add_argument("--remove_outliers", action="store_true")
     return parser.parse_args()
 
 
@@ -107,7 +108,7 @@ def place_probe_experiment(activations, target, is_test, probe=None, is_lat_lon=
 def main(args):
     model = args.model_checkpoint.split("/")[-1]
     n_layers = MODEL_N_LAYERS[model]
-    entity_df = load_entity_data(args.entity_file, args.country, args.continent)
+    entity_df = load_entity_data(args.entity_file, args.country, args.continent, args.remove_outliers)
     is_test = entity_df.is_test.values
 
     results = {

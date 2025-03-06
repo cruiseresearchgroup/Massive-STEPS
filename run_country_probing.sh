@@ -8,7 +8,7 @@ MODEL=meta-llama/Llama-3.2-1B
 ACTIVATION_AGGREGATION=last
 PROMPT_NAME=empty
 
-for COUNTRY in Australia
+for COUNTRY in Australia United_States Indonesia Japan United_Kingdom
 do
     DATASET_SAVE_PATH_CONT=${DATASET_SAVE_PATH}_${COUNTRY}
     ENTITY_TYPE_CONT=${ENTITY_TYPE}_${COUNTRY}
@@ -18,7 +18,8 @@ do
         --entity_type $ENTITY_TYPE_CONT \
         --model_checkpoint $MODEL \
         --dataset_save_path $DATASET_SAVE_PATH_CONT \
-        --country $COUNTRY
+        --country $COUNTRY \
+        --remove_outliers
 
     python src/save_activations.py \
         --model_checkpoint $MODEL \
@@ -38,7 +39,8 @@ do
         --activation_aggregation $ACTIVATION_AGGREGATION \
         --prompt_name $PROMPT_NAME \
         --model_checkpoint $MODEL \
-        --country $COUNTRY
+        --country $COUNTRY \
+        --remove_outliers
 
     python src/plot_graphs.py \
         --input_dir downloads/results/ \

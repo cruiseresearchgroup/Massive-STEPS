@@ -18,7 +18,8 @@ do
         --entity_type $ENTITY_TYPE_CONT \
         --model_checkpoint $MODEL \
         --dataset_save_path $DATASET_SAVE_PATH_CONT \
-        --continent $CONTINENT
+        --continent $CONTINENT \
+        --remove_outliers
 
     python src/save_activations.py \
         --model_checkpoint $MODEL \
@@ -38,7 +39,8 @@ do
         --activation_aggregation $ACTIVATION_AGGREGATION \
         --prompt_name $PROMPT_NAME \
         --model_checkpoint $MODEL \
-        --continent $CONTINENT
+        --continent $CONTINENT \
+        --remove_outliers
 
     python src/plot_graphs.py \
         --input_dir downloads/results/ \
