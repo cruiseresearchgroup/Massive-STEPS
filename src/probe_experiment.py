@@ -20,11 +20,13 @@ warnings.filterwarnings("ignore", category=UserWarning, message="TypedStorage is
 MODEL_N_LAYERS = {
     "Llama-2-7b-hf": 32,
     "Llama-3.2-1B": 16,
+    "aya-expanse-8b": 32,
 }
 
 RIDGE_ALPHAS = {
     "Llama-2-7b-hf": np.logspace(0.8, 4.1, 12),
-    "Llama-3.2-1B": np.logspace(0.8, 4.1, 12),  # TODO:
+    "Llama-3.2-1B": np.logspace(0.8, 4.1, 12),
+    "aya-expanse-8b": np.logspace(0.8, 4.1, 12),
 }
 
 """

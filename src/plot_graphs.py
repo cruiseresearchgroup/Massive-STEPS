@@ -26,7 +26,7 @@ def parse_args():
 
 def main(args):
     path = Path(args.input_dir)
-    csv_files = list(path.glob(f"*.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv"))
+    csv_files = sorted(path.glob(f"*.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv"))
 
     plt.figure(figsize=(8, 5))
 
