@@ -8,7 +8,7 @@ import numpy as np
 
 from prompts import prompt_generator
 from utils import convert_to_tuple_records
-from llm import Gemini
+from llm import Gemini, vLLM
 
 
 def parse_args():
@@ -53,7 +53,7 @@ def main(args):
     if "gemini" in args.model_name:
         llm = Gemini(model=args.model_name)
     else:
-        raise ValueError(f"Unknown model name: {args.model_name}")
+        llm = vLLM(model=args.model_name)
 
     def generate_prediction(user_id):
         output_file_path = output_dir / f"user_{user_id}.json"

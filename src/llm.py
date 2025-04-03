@@ -28,3 +28,30 @@ class Gemini(LLM):
             api_key=os.getenv("GEMINI_API_KEY"),
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
         )
+
+
+class vLLM(LLM):
+    def __init__(self, model: str):
+        self.model = model
+        self.client = OpenAI(api_key=os.getenv("VLLM_API_KEY"), base_url=os.getenv("VLLM_API_BASE_URL"))
+
+    def generate(self, prompt: str) -> dict:
+        response = self.client.chat.completions.create(
+            model=self.model,
+            response_format={"type": "json_object"},
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.0,
+            extra_body={
+                "guided_json": {
+                    "properties": {
+                        "prediction": {"items": {"type": "string"}, "title": "Prediction", "type": "array"},
+                        "reason": {"title": "Reason", "type": "string"},
+                    },
+                    "required": ["prediction", "reason"],
+                    "title": "NextPOIPrediction",
+                    "type": "object",
+                }
+            },
+        )
+        result = response.choices[0].message.content
+        return json.loads(result)
