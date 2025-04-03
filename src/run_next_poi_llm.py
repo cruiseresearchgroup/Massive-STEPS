@@ -58,6 +58,11 @@ def main(args):
     def generate_prediction(user_id):
         output_file_path = output_dir / f"user_{user_id}.json"
 
+        if output_file_path.exists():
+            with open(output_file_path, "r") as f:
+                result = json.load(f)
+            return result
+
         train_df_user = train_df[train_df["user_id"] == user_id]
         test_df_user = test_df[test_df["user_id"] == user_id]
 
