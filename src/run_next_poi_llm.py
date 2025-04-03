@@ -30,7 +30,7 @@ def calculate_metrics(results):
     acc_1, acc_5, ndcg_5 = 0, 0, 0
     for result in results:
         predictions, ground_truth = result["prediction"], result["ground_truth"]
-        acc_1 += 1 if predictions[0] == ground_truth else 0
+        acc_1 += 1 if len(predictions) > 0 and predictions[0] == ground_truth else 0
         acc_5 += 1 if ground_truth in predictions else 0
         ndcg_5 += (1 / (predictions.index(ground_truth) + 1)) if ground_truth in predictions else 0
 
@@ -82,6 +82,7 @@ def main(args):
         prompt = prompt_template(historical_stays, context_stays, target_stay)
 
         result = llm.generate(prompt)
+        result["prediction"] = [str(x) for x in result["prediction"][:5]]  # limit to 5 predictions
         result["ground_truth"] = target_stay[3]  # attach ground truth
 
         with open(output_file_path, "w") as f:
