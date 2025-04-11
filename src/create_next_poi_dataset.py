@@ -68,9 +68,11 @@ def main():
     )
 
     for split, trails in trail_splits.items():
+        trails_file = args.checkins_file.replace(".csv", f"_{split}.csv")
+        df[df["trail_id"].isin(trails)].to_csv(trails_file, index=False)
         api.upload_file(
-            path_or_fileobj=df[df["trail_id"].isin(trails)].to_csv(index=False).encode("utf-8"),
-            path_in_repo=checkins_file.replace(".csv", f"_{split}.csv"),
+            path_or_fileobj=trails_file,
+            path_in_repo=trails_file.split("/")[-1],
             repo_id=args.dataset_id,
             repo_type="dataset",
         )

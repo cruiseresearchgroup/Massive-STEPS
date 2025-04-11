@@ -164,4 +164,5 @@ cython_debug/
 semantic-trails
 notebooks/
 data/*/*.csv
+data/*/graph*
 results/**/user_*.json
