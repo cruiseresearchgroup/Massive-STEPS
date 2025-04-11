@@ -32,7 +32,7 @@ def calculate_metrics(results):
         predictions, ground_truth = result["prediction"], result["ground_truth"]
         acc_1 += 1 if len(predictions) > 0 and predictions[0] == ground_truth else 0
         acc_5 += 1 if ground_truth in predictions else 0
-        ndcg_5 += (1 / (predictions.index(ground_truth) + 1)) if ground_truth in predictions else 0
+        ndcg_5 += (1 / np.log2(predictions.index(ground_truth) + 1 + 1)) if ground_truth in predictions else 0
 
     return {"acc_1": acc_1 / len(results), "acc_5": acc_5 / len(results), "ndcg_5": ndcg_5 / len(results)}
 
