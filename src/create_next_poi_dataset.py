@@ -2,9 +2,11 @@ from argparse import ArgumentParser
 
 import pandas as pd
 from tqdm.auto import tqdm
+from huggingface_hub import HfApi
 from datasets import Dataset, DatasetDict
 from sklearn.model_selection import train_test_split
 
+api = HfApi()
 tqdm.pandas()
 
 """
@@ -53,6 +55,12 @@ def main():
     dataset = DatasetDict({"train": train_dataset, "validation": val_dataset, "test": test_dataset})
     dataset.push_to_hub(args.dataset_id, private=args.private)
     print(dataset)
+
+    # upload checkin file
+    checkins_file = args.checkins_file.split("/")[-1]
+    api.upload_file(
+        path_or_fileobj=args.checkins_file, path_in_repo=checkins_file, repo_id=args.dataset_id, repo_type="dataset"
+    )
 
 
 if __name__ == "__main__":

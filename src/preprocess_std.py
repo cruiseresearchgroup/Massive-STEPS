@@ -73,7 +73,7 @@ def main(args):
                 city2detail[cc] = dict(zip(headers, line))
 
     trajectories = []
-    venues = set()
+    venues, categories = set(), set()
 
     for std_file in [args.std_2013_file, args.std_2018_file]:
         with open(std_file, "r") as f:
@@ -82,7 +82,7 @@ def main(args):
             total = STD_2013_LINES if "2013" in std_file else STD_2018_LINES
             subset = "2013" if "2013" in std_file else "2018"
             for line in tqdm(lines, total=total):
-                trail_id, _, venue_id, _, _, city, _, _ = line
+                trail_id, _, venue_id, venue_category, _, city, _, _ = line
                 line[0] = f"{subset}_{trail_id}"  # add subset prefix to trail_id
                 city = city.replace("wd:", "")  # remove wd: prefix
                 # filter checkins based on city
@@ -91,17 +91,37 @@ def main(args):
 
                 trajectories.append(line)
                 venues.add(venue_id)
+                categories.add(venue_category)
 
     venue2index = {venue: i for i, venue in enumerate(sorted(venues))}
+    category2index = {category: i for i, category in enumerate(sorted(categories))}
 
     df = pd.DataFrame(trajectories, columns=headers)
     df["timestamp"] = df["timestamp"].apply(lambda t: str(parser.isoparse(t).replace(tzinfo=None)))  # remove offset
+    df["venue_category_id"] = df["venue_category"]  # keep original category code
+    df["venue_category_id_code"] = df["venue_category"].map(category2index)  # map/anonymize category to index
     df["venue_category"] = df["venue_category"].map(category2name)  # get POI category name
     df["venue_id"] = df["venue_id"].map(dict(venue2index))  # anonymize POI ids
     df["venue_city"] = df["venue_city"].apply(lambda x: x.replace("wd:", ""))  # remove wd: prefix
     df["venue_country"] = df["venue_city"].map(lambda city: city2detail[city]["admin2"])  # get country name
+    df["venue_city_latitude"] = df["venue_city"].map(lambda city: city2detail[city]["lat"])  # get city latitude
+    df["venue_city_longitude"] = df["venue_city"].map(lambda city: city2detail[city]["lon"])  # get city longitude
     df["venue_city"] = df["venue_city"].map(lambda city: city2detail[city]["admin1"])  # get city name
-    df = df.drop(columns=["venue_schema"])
+
+    columns = [
+        "trail_id",
+        "user_id",
+        "venue_id",
+        "venue_category",
+        "venue_category_id",
+        "venue_category_id_code",
+        "venue_city",
+        "venue_city_latitude",
+        "venue_city_longitude",
+        "venue_country",
+        "timestamp",
+    ]
+    df = df[columns]
 
     # filter trails with < 2 checkins
     trail_checkins = df.groupby("trail_id").size()
