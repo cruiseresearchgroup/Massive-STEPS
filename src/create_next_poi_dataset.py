@@ -48,6 +48,11 @@ def main():
 
     train_df, test_df = train_test_split(results, stratify=results["user_id"], test_size=0.2, random_state=42)
     train_df, val_df = train_test_split(train_df, test_size=0.125, random_state=42)
+    trail_splits = {
+        "train": train_df["trail_id"].unique(),
+        "validation": val_df["trail_id"].unique(),
+        "test": test_df["trail_id"].unique(),
+    }
 
     train_dataset = Dataset.from_pandas(train_df.reset_index(drop=True))
     val_dataset = Dataset.from_pandas(val_df.reset_index(drop=True))
@@ -61,6 +66,14 @@ def main():
     api.upload_file(
         path_or_fileobj=args.checkins_file, path_in_repo=checkins_file, repo_id=args.dataset_id, repo_type="dataset"
     )
+
+    for split, trails in trail_splits.items():
+        api.upload_file(
+            path_or_fileobj=df[df["trail_id"].isin(trails)].to_csv(index=False).encode("utf-8"),
+            path_in_repo=checkins_file.replace(".csv", f"_{split}.csv"),
+            repo_id=args.dataset_id,
+            repo_type="dataset",
+        )
 
 
 if __name__ == "__main__":
