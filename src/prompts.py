@@ -1,4 +1,6 @@
-# Modified from https://github.com/tsinghua-fib-lab/AgentMove/blob/main/models/prompts.py
+import random
+
+from utils import haversine_distance
 
 
 def prompt_generator(prompt_type):
@@ -6,11 +8,14 @@ def prompt_generator(prompt_type):
         return prompt_generator_llmzs
     elif prompt_type == "llmmob":
         return prompt_generator_llmmob
+    elif prompt_type == "llmmove":
+        return prompt_generator_llmmove
     else:
         raise ValueError(f"Unknown prompt type: {prompt_type}")
 
 
-def prompt_generator_llmzs(historical_stays, context_stays, target_stay):
+# Modified from https://github.com/tsinghua-fib-lab/AgentMove/blob/main/models/prompts.py
+def prompt_generator_llmzs(historical_stays, context_stays, target_stay, **kwargs):
     prompt = f"""Your task is to predict <next_place_id> in <target_stay>, a location with an unknown ID, while temporal data is available.
 
 Predict <next_place_id> by considering:
@@ -28,7 +33,7 @@ The data:
     return prompt
 
 
-def prompt_generator_llmmob(historical_stays, context_stays, target_stay):
+def prompt_generator_llmmob(historical_stays, context_stays, target_stay, **kwargs):
     prompt = f"""Your task is to predict a user's next location based on his/her activity pattern.
 You will be provided with <history> which is a list containing this user's historical stays, then <context> which provide contextual information 
 about where and when this user has been to recently. Stays in both <history> and <context> are in chronological order.
@@ -55,4 +60,45 @@ The data are as follows:
 <context>: {[[item[0],item[1],item[3]] for item in context_stays]}
 <target_stay>: {[target_stay[0], target_stay[1]]}
     """
+    return prompt
+
+
+# Modified from https://github.com/LLMMove/LLMMove/blob/main/models/LLMMove.py#L36
+def prompt_generator_llmmove(historical_stays, context_stays, target_stay, poi_infos, negative_sample_size):
+    # get most recent context stay
+    most_recent_poi_id = context_stays[-1][3]
+    negative_samples = random.sample(sorted(poi_infos.keys()), negative_sample_size)
+    candidate_set = negative_samples + [target_stay[3]]
+    candidates = [
+        (
+            candidate_poi_id,
+            haversine_distance(
+                poi_infos[candidate_poi_id]["latitude"],
+                poi_infos[candidate_poi_id]["longitude"],
+                poi_infos[most_recent_poi_id]["latitude"],
+                poi_infos[most_recent_poi_id]["longitude"],
+            ),
+            poi_infos[candidate_poi_id]["category"],
+        )
+        for candidate_poi_id in candidate_set
+    ]
+    candidates.sort(key=lambda x: x[1])  # sort by distance
+
+    prompt = f"""\
+<long-term check-ins> [Format: (POIID, Category)]: {[[item[3], item[2]] for item in historical_stays]}
+<recent check-ins> [Format: (POIID, Category)]: {[[item[3], item[2]] for item in context_stays]}
+<candidate set> [Format: (POIID, Distance, Category)]: {candidates}
+Your task is to recommend a user's next point-of-interest (POI) from <candidate set> based on his/her trajectory information.
+The trajectory information is made of a sequence of the user's <long-term check-ins> and a sequence of the user's <recent check-ins> in chronological order.
+Now I explain the elements in the format. "POIID" refers to the unique id of the POI, "Distance" indicates the distance (kilometers) between the user and the POI, and "Category" shows the semantic information of the POI.
+
+Requirements:
+1. Consider the long-term check-ins to extract users' long-term preferences since people tend to revisit their frequent visits.
+2. Consider the recent check-ins to extract users' current perferences.
+3. Consider the "Distance" since people tend to visit nearby pois.
+4. Consider which "Category" the user would go next for long-term check-ins indicates sequential transitions the user prefer.
+
+Please organize your answer in a JSON object containing following keys:
+"prediction" (10 distinct POIIDs of the ten most probable places in <candidate set> in descending order of probability), and "reason" (a concise explanation that supports your recommendation according to the requirements). Do not include line breaks in your output.
+"""
     return prompt
