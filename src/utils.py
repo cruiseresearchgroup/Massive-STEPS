@@ -61,3 +61,22 @@ def get_poi_infos(checkins_file):
                     "category": row["venue_category"],
                 }
     return poi_infos
+
+
+def extract_timestamp(target):
+    timestamp = re.search(r"At (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", target).group(1)
+    return datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+
+
+def create_historical_trajectory_prompt(row, is_train):
+    inputs, targets = row["inputs"], row["targets"]
+    input_pattern = (
+        r"(At \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}, user \d+ visited POI id \d+ which is a .*?, at .*?, .*?\.)"
+    )
+    target_pattern = r"(At \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}, user \d+ will visit POI id \d+\.)"
+
+    input_matches = list(re.findall(input_pattern, inputs))
+    target_matches = list(re.findall(target_pattern, targets))
+
+    trajectories = (input_matches + target_matches) if is_train else input_matches
+    return " ".join(trajectories)

@@ -4,11 +4,12 @@ import json
 
 from datasets import load_dataset
 from tqdm.contrib.concurrent import thread_map
+from sentence_transformers import SentenceTransformer
 import numpy as np
 
 from prompts import prompt_generator
 from llm import Gemini, vLLM
-from utils import convert_to_tuple_records, get_poi_infos
+from utils import convert_to_tuple_records, get_poi_infos, extract_timestamp, create_historical_trajectory_prompt
 
 
 def parse_args():
@@ -21,6 +22,10 @@ def parse_args():
     parser.add_argument("--num_historical_stays", type=int, default=15)
     # https://github.com/LLMMove/LLMMove/blob/main/models/LLMMove.py#L49
     parser.add_argument("--negative_sample_size", type=int, default=100)
+    # LLM-FS parameters
+    parser.add_argument("--sentence_model_checkpoint", type=str, default="nomic-ai/modernbert-embed-base")
+    parser.add_argument("--top_k_similar_trajectories", type=int, default=5)
+    parser.add_argument("--encode_batch_size", type=int, default=1)
     parser.add_argument("--prompt_type", type=str, required=True)
     parser.add_argument("--model_name", type=str, default="gemini-2.0-flash")
     parser.add_argument("--output_dir", type=Path, default=Path("results"))
@@ -59,6 +64,26 @@ def main(args):
     else:
         llm = vLLM(model=args.model_name)
 
+    if args.prompt_type == "llmfs":
+        train_df["timestamp"] = train_df["targets"].apply(extract_timestamp)
+
+        train_df["prompt"] = train_df.apply(create_historical_trajectory_prompt, axis=1, is_train=True)
+        test_df["prompt"] = test_df.apply(create_historical_trajectory_prompt, axis=1, is_train=False)
+
+        model = SentenceTransformer(args.sentence_model_checkpoint)
+        # embed train prompts as document embeddings
+        train_trajectory_embeddings = model.encode(
+            [f"search_document: {prompt}" for prompt in train_df["prompt"]],
+            show_progress_bar=True,
+            batch_size=args.encode_batch_size,
+        )
+        # embed test prompts as query embeddings
+        test_trajectory_embeddings = model.encode(
+            [f"search_query: {prompt}" for prompt in test_df["prompt"]],
+            show_progress_bar=True,
+            batch_size=args.encode_batch_size,
+        )
+
     def generate_prediction(user_id):
         output_file_path = output_dir / f"user_{user_id}.json"
 
@@ -90,6 +115,31 @@ def main(args):
         prompt_template = prompt_generator(args.prompt_type)
         if args.prompt_type == "llmmove":
             kwargs = {"poi_infos": poi_infos, "negative_sample_size": args.negative_sample_size}
+        elif args.prompt_type == "llmfs":
+            # embed test trajectory prompt and calculate similarity with train trajectory embeddings
+            test_trajectory_embedding = test_trajectory_embeddings[test_trajectory.name, :]
+            similarities = model.similarity(test_trajectory_embedding, train_trajectory_embeddings).numpy().squeeze(0)
+
+            # get all trajectories that occur before the test trajectory (avoid data leakage)
+            current_timestamp = extract_timestamp(test_trajectory["targets"])
+            historical_trajectories_indices = train_df[train_df["timestamp"] < current_timestamp].index
+
+            # get the top K most similar and strictly historical trajectories
+            sorted_indices = np.argsort(similarities)[::-1]
+            historical_indices = [i for i in sorted_indices if i in historical_trajectories_indices]
+            top_k_indices = historical_indices[: args.top_k_similar_trajectories]
+            similar_trajectories = train_df.iloc[top_k_indices]
+            similar_stays = []
+            for _, row in similar_trajectories.iterrows():
+                # convert the input and target trajectories to tuple records for prompting
+                similar_stays += convert_to_tuple_records(row["inputs"], poi_infos)
+                similar_stays += convert_to_tuple_records(row["targets"], poi_infos)
+
+            kwargs = {
+                "poi_infos": poi_infos,
+                "negative_sample_size": args.negative_sample_size,
+                "similar_stays": similar_stays,
+            }
         else:
             kwargs = {}
 
