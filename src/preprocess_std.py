@@ -1,3 +1,4 @@
+import re
 import csv
 import json
 from pathlib import Path
@@ -6,6 +7,7 @@ from argparse import ArgumentParser
 
 import pandas as pd
 from tqdm.auto import tqdm
+from datasets import load_dataset
 from shapely.geometry import Point, shape
 
 STD_2013_LINES = 18587049
@@ -45,6 +47,10 @@ def main(args):
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / args.output_file
 
+    fsq_ds = load_dataset("foursquare/fsq-os-places", "places", split="train")
+    keep_columns = ["fsq_place_id", "name", "latitude", "longitude", "address"]
+    fsq_ds = fsq_ds.remove_columns(list(set(fsq_ds.column_names) - set(keep_columns)))
+
     # map category id to name
     category2name = {}
 
@@ -73,7 +79,7 @@ def main(args):
                 city2detail[cc] = dict(zip(headers, line))
 
     trajectories = []
-    venues = set()
+    venues, categories = set(), set()
 
     for std_file in [args.std_2013_file, args.std_2018_file]:
         with open(std_file, "r") as f:
@@ -82,8 +88,10 @@ def main(args):
             total = STD_2013_LINES if "2013" in std_file else STD_2018_LINES
             subset = "2013" if "2013" in std_file else "2018"
             for line in tqdm(lines, total=total):
-                trail_id, _, venue_id, _, _, city, _, _ = line
+                trail_id, _, venue_id, venue_category, _, city, _, _ = line
                 line[0] = f"{subset}_{trail_id}"  # add subset prefix to trail_id
+                venue_id = venue_id.replace("foursquare:", "")  # remove foursquare: prefix
+                line[2] = venue_id
                 city = city.replace("wd:", "")  # remove wd: prefix
                 # filter checkins based on city
                 if city not in cities:
@@ -91,17 +99,46 @@ def main(args):
 
                 trajectories.append(line)
                 venues.add(venue_id)
+                categories.add(venue_category)
+
+    fsq_df = fsq_ds.filter(lambda x: x in venues, input_columns=["fsq_place_id"], num_proc=16).to_pandas()
 
     venue2index = {venue: i for i, venue in enumerate(sorted(venues))}
+    category2index = {category: i for i, category in enumerate(sorted(categories))}
 
     df = pd.DataFrame(trajectories, columns=headers)
+    df = df.merge(fsq_df, how="left", left_on="venue_id", right_on="fsq_place_id")  # merge with FourSquare dataset
     df["timestamp"] = df["timestamp"].apply(lambda t: str(parser.isoparse(t).replace(tzinfo=None)))  # remove offset
+    df["venue_category_id"] = df["venue_category"]  # keep original category code
+    df["venue_category_id_code"] = df["venue_category"].map(category2index)  # map/anonymize category to index
     df["venue_category"] = df["venue_category"].map(category2name)  # get POI category name
     df["venue_id"] = df["venue_id"].map(dict(venue2index))  # anonymize POI ids
     df["venue_city"] = df["venue_city"].apply(lambda x: x.replace("wd:", ""))  # remove wd: prefix
     df["venue_country"] = df["venue_city"].map(lambda city: city2detail[city]["admin2"])  # get country name
+    df["venue_city_latitude"] = df["venue_city"].map(lambda city: city2detail[city]["lat"])  # get city latitude
+    df["venue_city_longitude"] = df["venue_city"].map(lambda city: city2detail[city]["lon"])  # get city longitude
     df["venue_city"] = df["venue_city"].map(lambda city: city2detail[city]["admin1"])  # get city name
-    df = df.drop(columns=["venue_schema"])
+    df["name"] = df["name"].apply(lambda x: re.sub(r"[\n\r]", " ", x) if isinstance(x, str) else x)
+    df["address"] = df["address"].apply(lambda x: re.sub(r"[\n\r]", " ", x) if isinstance(x, str) else x)
+
+    columns = [
+        "trail_id",
+        "user_id",
+        "venue_id",
+        "latitude",
+        "longitude",
+        "name",
+        "address",
+        "venue_category",
+        "venue_category_id",
+        "venue_category_id_code",
+        "venue_city",
+        "venue_city_latitude",
+        "venue_city_longitude",
+        "venue_country",
+        "timestamp",
+    ]
+    df = df[columns]
 
     # filter trails with < 2 checkins
     trail_checkins = df.groupby("trail_id").size()

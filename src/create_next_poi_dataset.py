@@ -2,9 +2,11 @@ from argparse import ArgumentParser
 
 import pandas as pd
 from tqdm.auto import tqdm
+from huggingface_hub import HfApi
 from datasets import Dataset, DatasetDict
 from sklearn.model_selection import train_test_split
 
+api = HfApi()
 tqdm.pandas()
 
 """
@@ -46,6 +48,11 @@ def main():
 
     train_df, test_df = train_test_split(results, stratify=results["user_id"], test_size=0.2, random_state=42)
     train_df, val_df = train_test_split(train_df, test_size=0.125, random_state=42)
+    trail_splits = {
+        "train": train_df["trail_id"].unique(),
+        "validation": val_df["trail_id"].unique(),
+        "test": test_df["trail_id"].unique(),
+    }
 
     train_dataset = Dataset.from_pandas(train_df.reset_index(drop=True))
     val_dataset = Dataset.from_pandas(val_df.reset_index(drop=True))
@@ -53,6 +60,22 @@ def main():
     dataset = DatasetDict({"train": train_dataset, "validation": val_dataset, "test": test_dataset})
     dataset.push_to_hub(args.dataset_id, private=args.private)
     print(dataset)
+
+    # upload checkin file
+    checkins_file = args.checkins_file.split("/")[-1]
+    api.upload_file(
+        path_or_fileobj=args.checkins_file, path_in_repo=checkins_file, repo_id=args.dataset_id, repo_type="dataset"
+    )
+
+    for split, trails in trail_splits.items():
+        trails_file = args.checkins_file.replace(".csv", f"_{split}.csv")
+        df[df["trail_id"].isin(trails)].to_csv(trails_file, index=False)
+        api.upload_file(
+            path_or_fileobj=trails_file,
+            path_in_repo=trails_file.split("/")[-1],
+            repo_id=args.dataset_id,
+            repo_type="dataset",
+        )
 
 
 if __name__ == "__main__":
