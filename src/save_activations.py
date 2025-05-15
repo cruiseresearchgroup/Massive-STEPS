@@ -14,10 +14,9 @@ import torch
 Usage:
 
 python src/save_activations.py \
-    --model_checkpoint meta-llama/Llama-3.2-1B \
-    --dataset_save_path downloads/nyc_place_dataset \
-    --activation_save_path downloads/activation_datasets \
-    --entity_type nyc_place \
+    --model_checkpoint meta-llama/Llama-3.1-8B \
+    --dataset_save_path places_dataset \
+    --activation_save_path activation_datasets \
     --activation_aggregation last \
     --prompt_name empty \
     --batch_size 8 \
@@ -28,11 +27,10 @@ python src/save_activations.py \
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("--model_checkpoint", type=str, required=True, default="meta-llama/Llama-3.2-1B")
-    parser.add_argument("--dataset_save_path", type=str, required=True)
-    parser.add_argument("--activation_save_path", type=str, required=True, default="downloads/activation_datasets")
+    parser.add_argument("--model_checkpoint", type=str, required=True, default="meta-llama/Llama-3.1-8B")
+    parser.add_argument("--dataset_save_path", type=str, required=True, default="places_dataset")
+    parser.add_argument("--activation_save_path", type=str, required=True, default="activation_datasets")
     parser.add_argument("--activation_aggregation", type=str, default="last")
-    parser.add_argument("--entity_type", type=str, required=True)
     parser.add_argument("--prompt_name", type=str, default="empty")
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--save_precision", type=int, default=8)
@@ -166,11 +164,11 @@ def main(args):
     layer_activations = get_layer_activations_hf(args, model, tokenized_dataset, device=args.device)
 
     model_name = args.model_checkpoint.split("/")[-1]
-    activation_save_path = os.path.join(args.activation_save_path, model_name, args.entity_type)
+    activation_save_path = os.path.join(args.activation_save_path, model_name, "places")
     os.makedirs(activation_save_path, exist_ok=True)
 
     for layer_ix, activations in layer_activations.items():
-        save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.{layer_ix}.pt"
+        save_name = f"places.{args.activation_aggregation}.{args.prompt_name}.{layer_ix}.pt"
         save_path = os.path.join(activation_save_path, save_name)
         activations = adjust_precision(activations.to(torch.float32), args.save_precision, per_channel=True)
         torch.save(activations, save_path)

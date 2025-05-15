@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from common import load_entity_data
+from datasets import load_from_disk
 from probe_evaluation import *
 
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -20,12 +20,14 @@ warnings.filterwarnings("ignore", category=UserWarning, message="TypedStorage is
 MODEL_N_LAYERS = {
     "Llama-2-7b-hf": 32,
     "Llama-3.2-1B": 16,
+    "Llama-3.1-8B": 32,
     "aya-expanse-8b": 32,
 }
 
 RIDGE_ALPHAS = {
     "Llama-2-7b-hf": np.logspace(0.8, 4.1, 12),
     "Llama-3.2-1B": np.logspace(0.8, 4.1, 12),
+    "Llama-3.1-8B": np.logspace(0.8, 4.1, 12),
     "aya-expanse-8b": np.logspace(0.8, 4.1, 12),
 }
 
@@ -33,28 +35,23 @@ RIDGE_ALPHAS = {
 Usage:
 
 python src/probe_experiment.py \
-    --entity_file downloads/nyc_place.csv \
-    --entity_type nyc_place \
-    --activation_save_path downloads/activation_datasets \
+    --model_checkpoint meta-llama/Llama-3.1-8B \
+    --dataset_save_path places_dataset \
+    --activation_save_path activation_datasets \
     --activation_aggregation last \
     --prompt_name empty \
-    --model_checkpoint meta-llama/Llama-3.2-1B \
-    --output_dir downloads/results/
+    --output_dir probing_results
 """
 
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("--entity_file", type=str, required=True)
-    parser.add_argument("--entity_type", type=str)
-    parser.add_argument("--activation_save_path", type=str, required=True, default="downloads/activation_datasets")
+    parser.add_argument("--dataset_save_path", type=str, required=True, default="places_dataset")
+    parser.add_argument("--activation_save_path", type=str, required=True, default="activation_datasets")
     parser.add_argument("--activation_aggregation", type=str, default="last")
     parser.add_argument("--prompt_name", type=str, default="empty")
-    parser.add_argument("--model_checkpoint", type=str, default="meta-llama/Llama-3.2-1B")
-    parser.add_argument("--output_dir", type=str, default="downloads/results/")
-    parser.add_argument("--country", type=str, default=None)
-    parser.add_argument("--continent", type=str, default=None)
-    parser.add_argument("--remove_outliers", action="store_true")
+    parser.add_argument("--model_checkpoint", type=str, default="meta-llama/Llama-3.1-8B")
+    parser.add_argument("--output_dir", type=str, default="probing_results")
     return parser.parse_args()
 
 
@@ -108,9 +105,12 @@ def place_probe_experiment(activations, target, is_test, probe=None, is_lat_lon=
 
 
 def main(args):
-    model = args.model_checkpoint.split("/")[-1]
-    n_layers = MODEL_N_LAYERS[model]
-    entity_df = load_entity_data(args.entity_file, args.country, args.continent, args.remove_outliers)
+    model_name = args.model_checkpoint.split("/")[-1]
+    dataset_save_path = os.path.join(args.dataset_save_path, model_name)
+    tokenized_dataset = load_from_disk(dataset_save_path)
+    entity_df = tokenized_dataset.to_pandas()
+
+    n_layers = MODEL_N_LAYERS[model_name]
     is_test = entity_df.is_test.values
 
     results = {
@@ -121,8 +121,8 @@ def main(args):
         "probe_alphas": {},
     }
     for layer in tqdm(range(n_layers)):
-        save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.{layer}.pt"
-        save_path = os.path.join(args.activation_save_path, model, args.entity_type, save_name)
+        save_name = f"places.{args.activation_aggregation}.{args.prompt_name}.{layer}.pt"
+        save_path = os.path.join(args.activation_save_path, model_name, "places", save_name)
 
         # load data
         activations = torch.load(save_path, weights_only=False).dequantize()
@@ -133,7 +133,7 @@ def main(args):
 
         target = entity_df[["longitude", "latitude"]].values
 
-        probe = RidgeCV(alphas=RIDGE_ALPHAS[model], store_cv_values=True)
+        probe = RidgeCV(alphas=RIDGE_ALPHAS[model_name], store_cv_values=True)
         probe, scores, projection = place_probe_experiment(activations, target, is_test, probe=probe)
 
         probe_direction = probe.coef_.T.astype(np.float16)
@@ -152,7 +152,7 @@ def main(args):
 
     output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
-    save_name = f"{model}.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv"
+    save_name = f"{model_name}.places.{args.activation_aggregation}.{args.prompt_name}.csv"
     results.to_csv(os.path.join(output_dir, save_name), index=False)
 
 
