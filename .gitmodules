@@ -1,0 +1,9 @@
+[submodule "GETNext"]
+	path = GETNext
+	url = https://github.com/w11wo/GETNext.git
+[submodule "Spatio-Temporal-Hypergraph-Model"]
+	path = Spatio-Temporal-Hypergraph-Model
+	url = https://github.com/w11wo/Spatio-Temporal-Hypergraph-Model.git
+[submodule "Bigscity-LibCity"]
+	path = Bigscity-LibCity
+	url = https://github.com/w11wo/Bigscity-LibCity.git
