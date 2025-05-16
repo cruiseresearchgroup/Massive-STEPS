@@ -14,7 +14,7 @@ Usage:
 
 python src/create_next_poi_dataset.py \
     --checkins_file data/sydney/sydney_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Sydney
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Sydney
 """
 
 

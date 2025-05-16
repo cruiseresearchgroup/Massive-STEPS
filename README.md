@@ -7,7 +7,7 @@
 <sup>1</sup> School of Computer Science and Engineering, University of New South Wales, Sydney, Australia<br/>
 <sup>2</sup> ARC Centre of Excellence for Automated Decision Making + Society
 
-[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face_Collections-yellow)](https://huggingface.co/collections/w11wo/massive-steps-point-of-interest-check-in-dataset-67edf6dbb60e30eac9a9af1b)
+[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face_Collections-yellow)](https://huggingface.co/collections/CRUISEResearchGroup/massive-steps-point-of-interest-check-in-dataset-682716f625d74c2569bc7a73)
 
 </div>
 
@@ -21,22 +21,22 @@
 
 ### Download Preprocessed Dataset
 
-Massive-STEPS is available on [🤗 Datasets](https://huggingface.co/collections/w11wo/massive-steps-point-of-interest-check-in-dataset-67edf6dbb60e30eac9a9af1b). You can download the preprocessed dataset of each city using the following links:
+Massive-STEPS is available on [🤗 Datasets](https://huggingface.co/collections/CRUISEResearchGroup/massive-steps-point-of-interest-check-in-dataset-682716f625d74c2569bc7a73). You can download the preprocessed dataset of each city using the following links:
 
-| City            | Users | Trails | POIs  | Check-ins | #train | #val  | #test |                                   URL                                   |
-| --------------- | :---: | :----: | :---: | :-------: | :----: | :---: | :---: | :---------------------------------------------------------------------: |
-| Beijing 🇨🇳       |  56   |  573   | 1127  |   1470    |  400   |  58   |  115  |    [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Beijing/)    |
-| Istanbul 🇹🇷      | 23700 | 216411 | 53812 |  544471   | 151487 | 21641 | 43283 |   [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Istanbul/)    |
-| Jakarta 🇮🇩       | 8336  | 137396 | 76116 |  412100   | 96176  | 13740 | 27480 |    [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Jakarta/)    |
-| Kuwait City 🇰🇼   | 9628  | 91658  | 17180 |  232706   | 64160  | 9166  | 18332 |  [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Kuwait-City/)  |
-| Melbourne 🇦🇺     |  646  |  7864  | 7699  |   22050   |  5504  |  787  | 1573  |   [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Melbourne/)   |
-| Moscow 🇷🇺        | 3993  | 39485  | 17822 |  105620   | 27639  | 3949  | 7897  |    [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Moscow/)     |
-| New York 🇺🇸      | 6929  | 92041  | 49218 |  272368   | 64428  | 9204  | 18409 |   [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-New-York/)    |
-| Petaling Jaya 🇲🇾 | 14308 | 180410 | 60158 |  506430   | 126287 | 18041 | 36082 | [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Petaling-Jaya/) |
-| São Paulo 🇧🇷     | 5822  | 89689  | 38377 |  256824   | 62782  | 8969  | 17938 |   [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Sao-Paulo/)   |
-| Shanghai 🇨🇳      |  296  |  3636  | 4462  |   10491   |  2544  |  364  |  728  |   [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Shanghai/)    |
-| Sydney 🇦🇺        |  740  | 10148  | 8986  |   29900   |  7103  | 1015  | 2030  |    [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Sydney/)     |
-| Tokyo 🇯🇵         |  764  |  5482  | 4725  |   13839   |  3836  |  549  | 1097  |     [🤗](https://huggingface.co/datasets/w11wo/Massive-STEPS-Tokyo/)     |
+| City            | Users | Trails | POIs  | Check-ins | #train | #val  | #test |                                          URL                                          |
+| --------------- | :---: | :----: | :---: | :-------: | :----: | :---: | :---: | :-----------------------------------------------------------------------------------: |
+| Beijing 🇨🇳       |  56   |  573   | 1127  |   1470    |  400   |  58   |  115  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Beijing/)    |
+| Istanbul 🇹🇷      | 23700 | 216411 | 53812 |  544471   | 151487 | 21641 | 43283 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Istanbul/)    |
+| Jakarta 🇮🇩       | 8336  | 137396 | 76116 |  412100   | 96176  | 13740 | 27480 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Jakarta/)    |
+| Kuwait City 🇰🇼   | 9628  | 91658  | 17180 |  232706   | 64160  | 9166  | 18332 |  [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Kuwait-City/)  |
+| Melbourne 🇦🇺     |  646  |  7864  | 7699  |   22050   |  5504  |  787  | 1573  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Melbourne/)   |
+| Moscow 🇷🇺        | 3993  | 39485  | 17822 |  105620   | 27639  | 3949  | 7897  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Moscow/)     |
+| New York 🇺🇸      | 6929  | 92041  | 49218 |  272368   | 64428  | 9204  | 18409 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-New-York/)    |
+| Petaling Jaya 🇲🇾 | 14308 | 180410 | 60158 |  506430   | 126287 | 18041 | 36082 | [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Petaling-Jaya/) |
+| São Paulo 🇧🇷     | 5822  | 89689  | 38377 |  256824   | 62782  | 8969  | 17938 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sao-Paulo/)   |
+| Shanghai 🇨🇳      |  296  |  3636  | 4462  |   10491   |  2544  |  364  |  728  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Shanghai/)    |
+| Sydney 🇦🇺        |  740  | 10148  | 8986  |   29900   |  7103  | 1015  | 2030  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sydney/)     |
+| Tokyo 🇯🇵         |  764  |  5482  | 4725  |   13839   |  3836  |  549  | 1097  |     [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tokyo/)     |
 
 ### Dataset Construction
 
@@ -93,7 +93,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/beijing/beijing_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Beijing
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Beijing
 ```
 </details>
 
@@ -127,7 +127,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/istanbul/istanbul_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Istanbul
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Istanbul
 ```
 
 </details>
@@ -162,7 +162,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/jakarta/jakarta_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Jakarta
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Jakarta
 ```
 
 </details>
@@ -197,7 +197,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/kuwait_city/kuwait_city_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Kuwait-City
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Kuwait-City
 ```
 
 </details>
@@ -232,7 +232,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/melbourne/melbourne_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Melbourne
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Melbourne
 ```
 
 </details>
@@ -267,7 +267,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/moscow/moscow_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Moscow
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Moscow
 ```
 
 </details>
@@ -302,7 +302,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/new_york/new_york_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-New-York
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-New-York
 ```
 
 </details>
@@ -337,7 +337,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/petaling_jaya/petaling_jaya_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Petaling-Jaya
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Petaling-Jaya
 ```
 
 </details>
@@ -372,7 +372,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/sao_paulo/sao_paulo_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Sao-Paulo
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Sao-Paulo
 ```
 
 </details>
@@ -407,7 +407,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/shanghai/shanghai_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Shanghai
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Shanghai
 ```
 
 </details>
@@ -442,7 +442,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/sydney/sydney_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Sydney
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Sydney
 ```
 
 </details>
@@ -477,7 +477,7 @@ python src/preprocess_std.py \
 ```sh
 python src/create_next_poi_dataset.py \
     --checkins_file data/tokyo/tokyo_checkins.csv \
-    --dataset_id w11wo/Massive-STEPS-Tokyo
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Tokyo
 ```
 
 </details>
@@ -530,7 +530,7 @@ Our experiments rely on the following libraries:
 To reproduce our experiments, clone this repository and its submodules:
 
 ```sh
-git clone https://github.com/w11wo/Massive-STEPS
+git clone https://github.com/CRUISEResearchGroup/Massive-STEPS
 cd Massive-STEPS
 git submodule update
 ```
@@ -633,7 +633,7 @@ city=Beijing # Istanbul, Jakarta, etc.
 city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
 python src/run_next_poi_llm.py \
-    --dataset_name w11wo/Massive-STEPS-$city \ # Hugging Face dataset ID
+    --dataset_name CRUISEResearchGroup/Massive-STEPS-$city \ # Hugging Face dataset ID
     --num_users 200 --num_historical_stays 15 \ # number of test users and historical stays
     --prompt_type $prompt_type \ 
     --model_name $model \
