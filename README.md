@@ -8,6 +8,7 @@
 <sup>2</sup> ARC Centre of Excellence for Automated Decision Making + Society
 
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face_Collections-yellow)](https://huggingface.co/collections/CRUISEResearchGroup/massive-steps-point-of-interest-check-in-dataset-682716f625d74c2569bc7a73)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.11239-b31b1b.svg)](https://arxiv.org/abs/2505.11239)
 
 </div>
 
@@ -662,6 +663,22 @@ Our work is based on the following repositories:
 - [GETNext](https://github.com/songyangme/GETNext)
 - [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
 - [LibCity](https://github.com/LibCity/Bigscity-LibCity)
+
+## 🔖 Citation
+
+If you find this repository useful for your research, please consider citing our paper:
+
+```bibtex
+@misc{wongso2025massivestepsmassivesemantictrajectories,
+  title         = {Massive-STEPS: Massive Semantic Trajectories for Understanding POI Check-ins -- Dataset and Benchmarks},
+  author        = {Wilson Wongso and Hao Xue and Flora D. Salim},
+  year          = {2025},
+  eprint        = {2505.11239},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2505.11239}
+}
+```
 
 ## 📩 Contact
 
