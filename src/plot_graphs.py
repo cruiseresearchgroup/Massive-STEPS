@@ -9,7 +9,6 @@ Usage:
 
 python src/plot_graphs.py \
     --input_dir downloads/results/ \
-    --entity_type nyc_place \
     --activation_aggregation last \
     --prompt_name empty
 """
@@ -18,38 +17,49 @@ python src/plot_graphs.py \
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("--input_dir", type=str, required=True, default="downloads/results/")
-    parser.add_argument("--entity_type", type=str)
+    parser.add_argument("--model_checkpoint", type=str, required=True, default="meta-llama/Llama-3.2-1B")
     parser.add_argument("--activation_aggregation", type=str, default="last")
-    parser.add_argument("--prompt_name", type=str, default="empty")
+    parser.add_argument("--prompt_name", type=str, default="name")
     return parser.parse_args()
 
 
 def main(args):
-    path = Path(args.input_dir)
-    csv_files = sorted(path.glob(f"*.{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.csv"))
+    model_name = args.model_checkpoint.split("/")[-1]
+    path = Path(args.input_dir) / model_name / args.prompt_name
+    csv_files = sorted(path.glob(f"*.csv"))
 
     plt.figure(figsize=(8, 5))
 
-    for csv_file in csv_files:
-        df = pd.read_csv(csv_file)
-        model_name = ".".join(csv_file.stem.split(".")[:-3])
-        plt.plot(df["layer"] / max(df["layer"]), df["r2"], linestyle="-", label=model_name)
+    colors = [
+        "red",
+        "blue",
+        "green",
+        "orange",
+        "purple",
+        "brown",
+        "cyan",
+        "lime",
+        "teal",
+        "navy",
+        "maroon",
+        "olive",
+    ]
 
-    if args.entity_type == "nyc_place":
-        ylabel = "NYC Map test R²"
-    elif args.entity_type == "world_place":
-        ylabel = "World Map test R²"
-    elif args.entity_type.startswith("world_place"):
-        country = args.entity_type.split("_")[-1]
-        ylabel = f"{country} Map test R²"
-    else:
-        raise NotImplementedError
+    for idx, csv_file in enumerate(csv_files):
+        df = pd.read_csv(csv_file)
+        city = csv_file.stem.split(".")[-3].replace("places_", "")
+        city = " ".join(city.split("_")).title()
+        plt.plot(df["layer"] / max(df["layer"]), df["r2"], linestyle="-", label=city, color=colors[idx])
 
     plt.xlabel("Model Depth")
-    plt.ylabel(ylabel)
-    plt.legend()
+    plt.ylabel("Places test R²")
+    plt.title(f"{model_name}, Prompt type: {args.prompt_name}")
+    plt.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize=8)
     plt.grid(True, linestyle="--", alpha=0.6)
-    fig_save_name = f"{args.entity_type}.{args.activation_aggregation}.{args.prompt_name}.png"
+    plt.ylim(-0.5, 1.0)
+    plt.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
+    plt.tight_layout()
+    fig_save_name = f"{model_name}.{args.activation_aggregation}.{args.prompt_name}.png"
     plt.savefig(path / fig_save_name)
 
 

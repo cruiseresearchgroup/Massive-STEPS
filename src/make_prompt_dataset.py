@@ -1,12 +1,16 @@
 # Modified from: https://github.com/wesg52/world-models/blob/main/make_prompt_datasets.py
 
 from argparse import ArgumentParser
+from pathlib import Path
 import os
 
 from sklearn.model_selection import train_test_split
 from scipy.spatial.distance import mahalanobis
+from tqdm.contrib.concurrent import thread_map
+from shapely.geometry import Point, shape
 from transformers import AutoTokenizer
 from datasets import Dataset
+import geopandas as gpd
 import pandas as pd
 import numpy as np
 import torch
@@ -28,54 +32,42 @@ def parse_args():
     parser.add_argument("--model_checkpoint", type=str, required=True, default="meta-llama/Llama-3.2-1B")
     parser.add_argument("--dataset_save_path", type=str, required=True)
     parser.add_argument("--city", type=str, default=None)
+    parser.add_argument("--prompt_name", type=str, default="name")
+    parser.add_argument("--min_checkins", type=int, default=2)
     parser.add_argument("--remove_outliers", action="store_true")
     return parser.parse_args()
 
 
-def normalize_location_names(locations):
-    stop_words = {"AND", "OR", "OF", "THE", "A", "AT", "&", "IN", "TO"}
-    abbv_words = {
-        "FDNY",
-        "NYCT",
-        "YMCA",
-        "LGA",
-        "US",
-        "NYC",
-        "PS",
-        "IS",
-        "NYS",
-        "UN",
-        "NY",
-        "EMS",
-        "JCC",
-        "NYU",
-        "CC",
-        "NYPD",
-        "NYPA",
-        "DHS",
+def make_prompt(name, address, city, country, prompt_name):
+    code2name = {
+        "AU": "Australia",
+        "BR": "Brazil",
+        "CN": "China",
+        "ID": "Indonesia",
+        "JP": "Japan",
+        "KW": "Kuwait",
+        "MY": "Malaysia",
+        "RU": "Russia",
+        "TR": "Turkey",
+        "US": "United States",
     }
-    normalized_names = []
 
-    for location in locations:
-        words = location.split()
-        normalized_name = []
-        for i, word in enumerate(words):
-            if word.strip() in stop_words:
-                normalized_name.append(word.lower())
-            elif word.strip() in abbv_words:
-                normalized_name.append(word)
-            else:
-                normalized_name.append(word.lower().capitalize())
-        normalized_names.append(" ".join(normalized_name))
+    if prompt_name == "name":
+        prompt = name
+    elif prompt_name == "address":
+        prompt = address
+    elif prompt_name == "name_address":
+        prompt = f"{name}, {address}"
+    elif prompt_name == "name_address_city":
+        prompt = f"{name}, {address}, {city}"
+    elif prompt_name == "name_address_city_country":
+        prompt = f"{name}, {address}, {city}, {code2name[country]}"
+    elif prompt_name == "address_city":
+        prompt = f"{address}, {city}"
+    else:
+        raise ValueError(f"Unknown prompt name: {prompt_name}")
 
-    return normalized_names
-
-
-def normalize_city_names(cities):
-    def _normalize(city):
-        return " ".join([word.capitalize() for word in city.split("_")])
-
-    return [_normalize(city) for city in cities]
+    return prompt
 
 
 def make_places_prompt_dataset(tokenizer, entity_df):
@@ -84,16 +76,18 @@ def make_places_prompt_dataset(tokenizer, entity_df):
     def _get_list(train_df, test_df, col):
         return train_df[col].to_list() + test_df[col].to_list()
 
-    entity_list = _get_list(train_df, test_df, "name")
+    name_list = _get_list(train_df, test_df, "name")
     address_list = _get_list(train_df, test_df, "address")
-    city_list = _get_list(train_df, test_df, "city")
+    city_list = _get_list(train_df, test_df, "venue_city")
+    country_list = _get_list(train_df, test_df, "venue_country")
     latitude_list = _get_list(train_df, test_df, "latitude")
     longitude_list = _get_list(train_df, test_df, "longitude")
     is_test = [0] * len(train_df) + [1] * len(test_df)
 
-    city_list = normalize_city_names(city_list)
-    entity_list = [f"{address}, {city.capitalize()}" for address, city in zip(address_list, city_list)]
-    entity_list = normalize_location_names(entity_list)
+    entity_list = [
+        make_prompt(name, address, city, country, args.prompt_name)
+        for name, address, city, country in zip(name_list, address_list, city_list, country_list)
+    ]
 
     token_ids = tokenizer.batch_encode_plus(
         entity_list,
@@ -139,8 +133,40 @@ def remove_outliers(entity_df, outliers_percentile=95):
     return entity_df
 
 
+def is_in_polygon(lon, lat, polygon):
+    point = Point(float(lon), float(lat))
+    return polygon.intersects(point)
+
+
+def filter_places_by_polygon(entity_df, city_geo_json_file):
+    gdf = gpd.read_file(city_geo_json_file)
+    gdf = gdf[(gdf["type"] == "boundary") | (gdf["type"] == "multipolygon")]
+    city_polygon = shape(gdf.geometry.values[0])
+
+    checkins_coordinates = entity_df[["longitude", "latitude"]].to_numpy()
+    entity_df["in_polygon"] = thread_map(lambda c: is_in_polygon(c[0], c[1], city_polygon), checkins_coordinates)
+    entity_df = entity_df[entity_df["in_polygon"]]
+    return entity_df
+
+
+def load_places_df(data_path, city, min_checkins):
+    city_path = os.path.join(data_path, city)
+    df = pd.read_csv(os.path.join(city_path, f"{city}_checkins.csv"))
+    columns = ["name", "address", "latitude", "longitude", "venue_city", "venue_country"]
+    df = df.groupby(columns).size().reset_index(name="num_checkins").dropna()
+    df = df[df["num_checkins"] >= min_checkins]
+    df["city"] = city
+    return df
+
+
+def get_city_geo_json_file(data_path, city):
+    city_geo_json_file = list(Path(data_path).glob(f"{city}/{city}_*_overpass.geojson"))
+    assert len(city_geo_json_file) == 1, f"GeoJSON file for {city} not found."
+    return city_geo_json_file[0]
+
+
 def main(args):
-    cities = [
+    all_cities = [
         "beijing",
         "istanbul",
         "jakarta",
@@ -155,25 +181,10 @@ def main(args):
         "tokyo",
     ]
 
-    if args.city is not None:
-        city_path = os.path.join(args.data_path, args.city)
-        entity_df = pd.read_csv(os.path.join(city_path, f"{args.city}_checkins.csv"))
-        entity_df = (
-            entity_df.groupby(["name", "address", "latitude", "longitude"]).size().reset_index(name="count").dropna()
-        )
-        entity_df = entity_df[entity_df["count"] >= 10]  # only keep POIs with at least 10 check-ins
-        entity_df["city"] = args.city
-    else:
-        all_df = []
-        for city in cities:
-            city_path = os.path.join(args.data_path, city)
-            df = pd.read_csv(os.path.join(city_path, f"{city}_checkins.csv"))
-            df = df.groupby(["name", "address", "latitude", "longitude"]).size().reset_index(name="count").dropna()
-            df = df[df["count"] >= 10]  # only keep POIs with at least 10 check-ins
-            df["city"] = city
-            all_df.append(df)
-
-        entity_df = pd.concat(all_df, ignore_index=True)
+    cities = all_cities if args.city is None else [args.city]
+    all_df = [load_places_df(args.data_path, city, min_checkins=args.min_checkins) for city in cities]
+    entity_df = pd.concat(all_df, ignore_index=True)
+    entity_df = filter_places_by_polygon(entity_df, get_city_geo_json_file(args.data_path, args.city))
 
     if args.remove_outliers:
         entity_df = remove_outliers(entity_df)

@@ -2,6 +2,7 @@
 
 from argparse import ArgumentParser
 import warnings
+import pickle
 import os
 
 from tqdm import tqdm
@@ -49,9 +50,10 @@ def parse_args():
     parser.add_argument("--dataset_save_path", type=str, required=True, default="places_dataset")
     parser.add_argument("--activation_save_path", type=str, required=True, default="activation_datasets")
     parser.add_argument("--activation_aggregation", type=str, default="last")
-    parser.add_argument("--prompt_name", type=str, default="empty")
+    parser.add_argument("--prompt_name", type=str, default="name")
     parser.add_argument("--model_checkpoint", type=str, default="meta-llama/Llama-3.1-8B")
     parser.add_argument("--output_dir", type=str, default="probing_results")
+    parser.add_argument("--city", type=str, default=None)
     return parser.parse_args()
 
 
@@ -148,12 +150,18 @@ def main(args):
     scores = results["scores"]
     layer_ids = list(scores.keys())
     r2_scores = [scores[layer]["test", "haversine_r2"] for layer in scores]
-    results = pd.DataFrame({"layer": layer_ids, "r2": r2_scores})
+    test_scores_df = pd.DataFrame({"layer": layer_ids, "r2": r2_scores})
 
-    output_dir = args.output_dir
+    output_dir = os.path.join(args.output_dir, model_name, args.prompt_name)
     os.makedirs(output_dir, exist_ok=True)
-    save_name = f"{model_name}.places.{args.activation_aggregation}.{args.prompt_name}.csv"
-    results.to_csv(os.path.join(output_dir, save_name), index=False)
+    entity_name = "places" if args.city is None else f"places_{args.city}"
+
+    save_name = f"{model_name}.{entity_name}.{args.activation_aggregation}.{args.prompt_name}.pkl"
+    with open(os.path.join(output_dir, save_name), "wb") as f:
+        pickle.dump(results, f)
+
+    save_name = f"{model_name}.{entity_name}.{args.activation_aggregation}.{args.prompt_name}.csv"
+    test_scores_df.to_csv(os.path.join(output_dir, save_name), index=False)
 
 
 if __name__ == "__main__":

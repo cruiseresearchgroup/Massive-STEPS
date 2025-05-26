@@ -31,7 +31,7 @@ def parse_args():
     parser.add_argument("--dataset_save_path", type=str, required=True, default="places_dataset")
     parser.add_argument("--activation_save_path", type=str, required=True, default="activation_datasets")
     parser.add_argument("--activation_aggregation", type=str, default="last")
-    parser.add_argument("--prompt_name", type=str, default="empty")
+    parser.add_argument("--prompt_name", type=str, default="name")
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--save_precision", type=int, default=8)
     parser.add_argument("--device", type=str, default="cuda")
