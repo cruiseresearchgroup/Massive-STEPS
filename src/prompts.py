@@ -10,6 +10,8 @@ def prompt_generator(prompt_type):
         return prompt_generator_llmmob
     elif prompt_type == "llmmove":
         return prompt_generator_llmmove
+    elif prompt_type == "st_day_classification":
+        return prompt_generator_st_day_classification
     else:
         raise ValueError(f"Unknown prompt type: {prompt_type}")
 
@@ -100,5 +102,25 @@ Requirements:
 
 Please organize your answer in a JSON object containing following keys:
 "prediction" (10 distinct POIIDs of the ten most probable places in <candidate set> in descending order of probability), and "reason" (a concise explanation that supports your recommendation according to the requirements). Do not include line breaks in your output.
+"""
+    return prompt
+
+
+def prompt_generator_st_day_classification(context_stays, target_stay, **kwargs):
+    trajectory = context_stays + [target_stay]
+    prompt = f"""\
+A trajectory is a sequence of check-ins, each represented as (start_time, poi_category). The detailed explanation of each element is as follows:
+start_time: the start time of the check-in in 12h clock format.
+poi_category: the category of the point of interest (POI) visited during the check-in
+
+The trajectory is as follows: {[[item[0], item[2]] for item in trajectory]}
+
+Your task is to classify the day of the week for a trajectory.
+Consider the temporal information (i.e., start_time) of the trajectory, which is important because people's activity varies during different time (e.g., nighttime versus daytime).
+Also consider the POI categories, which can provide insights into the user's activity patterns.
+
+Please organize your answer in a JSON object containing following keys:
+"prediction" (the predicted day of the week, e.g. "Monday" or "Tuesday", etc.) and "reason" (a concise explanation that supports your prediction).
+Do not include line breaks in your output. Do not simply predict "Weekday" or "Weekend" without providing a specific day of the week.
 """
     return prompt
