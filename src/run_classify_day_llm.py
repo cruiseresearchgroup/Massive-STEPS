@@ -1,13 +1,15 @@
 from argparse import ArgumentParser
+from typing import Literal
 from pathlib import Path
 import json
 
+from pydantic import BaseModel
 from datasets import load_dataset
 from tqdm.contrib.concurrent import thread_map
 import numpy as np
 
 from prompts import prompt_generator
-from llm import Gemini, vLLM
+from llm import LLM, Gemini, vLLM
 from utils import convert_to_tuple_records, get_poi_infos
 
 
@@ -19,6 +21,7 @@ def parse_args():
     parser.add_argument("--num_users", type=int, default=200)
     parser.add_argument("--prompt_type", type=str, default="st_day_classification")
     parser.add_argument("--model_name", type=str, default="gemini-2.0-flash")
+    parser.add_argument("--city", type=str, required=True)
     parser.add_argument("--output_dir", type=Path, default=Path("results"))
     parser.add_argument("--num_workers", type=int, default=8)
     parser.add_argument("--seed", type=int, default=42)
@@ -32,6 +35,11 @@ def calculate_metrics(results):
         acc_1 += 1 if len(predictions) > 0 and predictions[0] == ground_truth else 0
 
     return {"acc_1": acc_1 / len(results)}
+
+
+class DayOfWeek(BaseModel):
+    prediction: Literal["weekday", "weekend"]
+    reason: str
 
 
 def main(args):
@@ -48,10 +56,19 @@ def main(args):
     users = np.random.RandomState(args.seed).choice(users, min(args.num_users, len(users)), replace=False)
     poi_infos = get_poi_infos(args.checkins_file)
 
-    if "gemini" in args.model_name:
+    if "gpt" in args.model_name:
+        llm = LLM(model=args.model_name)
+    elif "gemini" in args.model_name:
         llm = Gemini(model=args.model_name)
     else:
         llm = vLLM(model=args.model_name)
+
+    if "gpt-5" in args.model_name:
+        kwargs = {"temperature": 1.0, "reasoning_effort": "medium", "verbosity": "low", "max_completion_tokens": 4096}
+        response_format = None
+    else:
+        kwargs = {}
+        response_format = DayOfWeek
 
     def generate_prediction(user_id):
         output_file_path = output_dir / f"user_{user_id}.json"
@@ -70,11 +87,11 @@ def main(args):
         target_stay = convert_to_tuple_records(test_trajectory["targets"], poi_infos)[0]
 
         prompt_template = prompt_generator(args.prompt_type)
-        prompt = prompt_template(context_stays, target_stay)
+        prompt = prompt_template(context_stays, target_stay, city=args.city)
 
-        result = llm.generate(prompt)
+        result = llm.generate(prompt, response_format=response_format, **kwargs)
         result["prediction"] = [result["prediction"]]
-        result["ground_truth"] = target_stay[1]  # attach ground truth day
+        result["ground_truth"] = "weekend" if target_stay[1] in ("Saturday", "Sunday") else "weekday"
 
         with open(output_file_path, "w") as f:
             json.dump(result, f, indent=4)

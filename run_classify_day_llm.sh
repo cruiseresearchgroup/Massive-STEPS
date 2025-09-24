@@ -1,6 +1,6 @@
 model=gemini-2.0-flash
 
-for city in Melbourne Jakarta Tokyo; do
+for city in Beijing Istanbul Jakarta Kuwait-City Melbourne Moscow New-York Petaling-Jaya Sao-Paulo Shanghai Sydney Tokyo; do
     city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
     python src/run_classify_day_llm.py \
@@ -8,5 +8,6 @@ for city in Melbourne Jakarta Tokyo; do
         --num_users 200  \
         --prompt_type st_day_classification \
         --model_name $model \
+        --city $city \
         --checkins_file data/$city_key/${city_key}_checkins.csv
 done

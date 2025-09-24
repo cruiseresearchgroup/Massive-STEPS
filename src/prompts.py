@@ -106,7 +106,7 @@ Please organize your answer in a JSON object containing following keys:
     return prompt
 
 
-def prompt_generator_st_day_classification(context_stays, target_stay, **kwargs):
+def prompt_generator_st_day_classification(context_stays, target_stay, city, **kwargs):
     trajectory = context_stays + [target_stay]
     prompt = f"""\
 A trajectory is a sequence of check-ins, each represented as (start_time, poi_category). The detailed explanation of each element is as follows:
@@ -115,12 +115,13 @@ poi_category: the category of the point of interest (POI) visited during the che
 
 The trajectory is as follows: {[[item[0], item[2]] for item in trajectory]}
 
-Your task is to classify the day of the week for a trajectory.
+Your task is to classify whether the last check-in occurs on a weekday or a weekend.
 Consider the temporal information (i.e., start_time) of the trajectory, which is important because people's activity varies during different time (e.g., nighttime versus daytime).
-Also consider the POI categories, which can provide insights into the user's activity patterns.
+Consider the POI categories, which can provide insights into the user's activity patterns.
+Also consider the city context, as different cities may have different cultural and social norms that influence activity patterns. The city is: {city}.
 
 Please organize your answer in a JSON object containing following keys:
-"prediction" (the predicted day of the week, e.g. "Monday" or "Tuesday", etc.) and "reason" (a concise explanation that supports your prediction).
-Do not include line breaks in your output. Do not simply predict "Weekday" or "Weekend" without providing a specific day of the week.
+"prediction" ("weekday" or "weekend") and "reason" (a concise explanation that supports your prediction).
+Do not include line breaks in your output.
 """
     return prompt
