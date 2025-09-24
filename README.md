@@ -517,6 +517,17 @@ We also conducted zero-shot POI recommendation experiments on the Massive-STEPS 
 |              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.058    |    0.015     |    0.015    |      0.010      |     0.040     |   0.005    |    0.035     |       0.040       |     0.045     |    0.020     |   0.055    |   0.030   |
 |              | **gemma-2-9b-it-AWQ-INT4**              |    0.096    |    0.100     |    0.235    |      0.120      |     0.115     |   0.110    |    0.115     |       0.175       |     0.195     |    0.105     |   0.125    |   0.130   |
 
+### Spatiotemporal Classification and Reasoning
+
+We conducted spatiotemporal classification and reasoning experiments on the Massive-STEPS dataset. Specifically, we evaluated the zero-shot performance of LLMs to classify whether a check-in trajectory ended at a weekend (Saturday or Sunday) or a weekday (Monday to Friday). The following table summarizes the results of our experiments, reported in accuracy:
+
+| **Model**            | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tokyo** |
+| -------------------- | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :---------------: | :-----------: | :----------: | :--------: | :-------: |
+| **gemini-2.0-flash** |    0.615    |  **0.715**   |  **0.650**  |    **0.765**    |   **0.635**   |   0.740    |  **0.610**   |     **0.610**     |   **0.730**   |  **0.600**   | **0.550**  |   0.510   |
+| **gpt-4o-mini**      |    0.538    |    0.610     |    0.610    |      0.430      |   **0.635**   | **0.745**  |    0.600     |       0.590       |     0.645     |    0.565     |   0.545    |   0.495   |
+| **gpt-4.1-mini**     |  **0.673**  |    0.615     |    0.600    |      0.690      |     0.585     | **0.745**  |    0.595     |       0.575       |     0.700     |    0.565     |   0.515    |   0.550   |
+| **gpt-5-nano**       |    0.635    |    0.535     |    0.530    |      0.470      |     0.500     |   0.635    |    0.580     |       0.565       |     0.680     |    0.465     |   0.440    | **0.580** |
+
 ## 🧪 Replicate Experiments
 
 ### Install Dependencies
@@ -644,6 +655,24 @@ python src/run_next_poi_llm.py \
 This will run the zero-shot POI recommendation experiment using the specified model and prompt type on the specified city. The results will be saved in the `results/{dataset_name}/{model_name}/{prompt_type}/` directory.
 
 You can refer to the `run_next_poi_llm.sh` script to see the full list of models and prompt types used in our experiments. The script will run the zero-shot POI recommendation experiment for each model and prompt type on all cities in the Massive-STEPS dataset.
+
+### Spatiotemporal Classification and Reasoning
+
+To run a spatiotemporal classification and reasoning experiment, you can use the following command:
+
+```bash
+model=gemini-2.0-flash # or gpt-4o-mini, etc.
+city=Beijing # Istanbul, Jakarta, etc.
+city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+
+python src/run_classify_day_llm.py \
+    --dataset_name CRUISEResearchGroup/Massive-STEPS-$city \ # Hugging Face dataset ID
+    --num_users 200  \ # number of test users
+    --prompt_type st_day_classification \
+    --model_name $model \
+    --city $city \
+    --checkins_file data/$city_key/${city_key}_checkins.csv # path to the check-in data
+```
 
 #### Hosting LLMs
 
