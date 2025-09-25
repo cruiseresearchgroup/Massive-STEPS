@@ -16,7 +16,7 @@
 
 ![Massive-STEPS](assets/world_map.png)
 
-**Massive-STEPS** is a large-scale dataset of semantic trajectories intended for understanding POI check-ins. The dataset is derived from the [Semantic Trails Dataset](https://github.com/D2KLab/semantic-trails) and [Foursquare Open Source Places](https://huggingface.co/datasets/foursquare/fsq-os-places), and includes check-in data from 12 cities across 10 countries. The dataset is designed to facilitate research in various domains, including trajectory prediction, POI recommendation, and urban modeling. Massive-STEPS emphasizes the importance of geographical diversity, scale, semantic richness, and reproducibility in trajectory datasets.
+**Massive-STEPS** is a large-scale dataset of semantic trajectories intended for understanding POI check-ins. The dataset is derived from the [Semantic Trails Dataset](https://github.com/D2KLab/semantic-trails) and [Foursquare Open Source Places](https://huggingface.co/datasets/foursquare/fsq-os-places), and includes check-in data from 15 cities across 10 countries. The dataset is designed to facilitate research in various domains, including trajectory prediction, POI recommendation, and urban modeling. Massive-STEPS emphasizes the importance of geographical diversity, scale, semantic richness, and reproducibility in trajectory datasets.
 
 ## 🔢 Dataset
 
@@ -24,20 +24,23 @@
 
 Massive-STEPS is available on [🤗 Datasets](https://huggingface.co/collections/CRUISEResearchGroup/massive-steps-point-of-interest-check-in-dataset-682716f625d74c2569bc7a73). You can download the preprocessed dataset of each city using the following links:
 
-| City            | Users | Trails | POIs  | Check-ins | #train | #val  | #test |                                          URL                                          |
-| --------------- | :---: | :----: | :---: | :-------: | :----: | :---: | :---: | :-----------------------------------------------------------------------------------: |
-| Beijing 🇨🇳       |  56   |  573   | 1127  |   1470    |  400   |  58   |  115  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Beijing/)    |
-| Istanbul 🇹🇷      | 23700 | 216411 | 53812 |  544471   | 151487 | 21641 | 43283 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Istanbul/)    |
-| Jakarta 🇮🇩       | 8336  | 137396 | 76116 |  412100   | 96176  | 13740 | 27480 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Jakarta/)    |
-| Kuwait City 🇰🇼   | 9628  | 91658  | 17180 |  232706   | 64160  | 9166  | 18332 |  [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Kuwait-City/)  |
-| Melbourne 🇦🇺     |  646  |  7864  | 7699  |   22050   |  5504  |  787  | 1573  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Melbourne/)   |
-| Moscow 🇷🇺        | 3993  | 39485  | 17822 |  105620   | 27639  | 3949  | 7897  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Moscow/)     |
-| New York 🇺🇸      | 6929  | 92041  | 49218 |  272368   | 64428  | 9204  | 18409 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-New-York/)    |
-| Petaling Jaya 🇲🇾 | 14308 | 180410 | 60158 |  506430   | 126287 | 18041 | 36082 | [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Petaling-Jaya/) |
-| São Paulo 🇧🇷     | 5822  | 89689  | 38377 |  256824   | 62782  | 8969  | 17938 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sao-Paulo/)   |
-| Shanghai 🇨🇳      |  296  |  3636  | 4462  |   10491   |  2544  |  364  |  728  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Shanghai/)    |
-| Sydney 🇦🇺        |  740  | 10148  | 8986  |   29900   |  7103  | 1015  | 2030  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sydney/)     |
-| Tokyo 🇯🇵         |  764  |  5482  | 4725  |   13839   |  3836  |  549  | 1097  |     [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tokyo/)     |
+| City            | Users | Trails |  POIs  | Check-ins | #train  |  #val  | #test  |                                          URL                                          |
+| --------------- | :---: | :----: | :----: | :-------: | :-----: | :----: | :----: | :-----------------------------------------------------------------------------------: |
+| Bandung 🇮🇩       | 3,377 | 55,333 | 29,026 |  161,284  | 113,058 | 16,018 | 32,208 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Bandung/)    |
+| Beijing 🇨🇳       |  56   |  573   |  1127  |   1470    |   400   |   58   |  115   |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Beijing/)    |
+| Istanbul 🇹🇷      | 23700 | 216411 | 53812  |  544471   | 151487  | 21641  | 43283  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Istanbul/)    |
+| Jakarta 🇮🇩       | 8336  | 137396 | 76116  |  412100   |  96176  | 13740  | 27480  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Jakarta/)    |
+| Kuwait City 🇰🇼   | 9628  | 91658  | 17180  |  232706   |  64160  |  9166  | 18332  |  [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Kuwait-City/)  |
+| Melbourne 🇦🇺     |  646  |  7864  |  7699  |   22050   |  5504   |  787   |  1573  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Melbourne/)   |
+| Moscow 🇷🇺        | 3993  | 39485  | 17822  |  105620   |  27639  |  3949  |  7897  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Moscow/)     |
+| New York 🇺🇸      | 6929  | 92041  | 49218  |  272368   |  64428  |  9204  | 18409  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-New-York/)    |
+| Palembang 🇮🇩     |  267  | 4,699  | 4,343  |  14,467   | 10,132  | 1,487  | 2,848  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Palembang/)   |
+| Petaling Jaya 🇲🇾 | 14308 | 180410 | 60158  |  506430   | 126287  | 18041  | 36082  | [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Petaling-Jaya/) |
+| São Paulo 🇧🇷     | 5822  | 89689  | 38377  |  256824   |  62782  |  8969  | 17938  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sao-Paulo/)   |
+| Shanghai 🇨🇳      |  296  |  3636  |  4462  |   10491   |  2544   |  364   |  728   |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Shanghai/)    |
+| Sydney 🇦🇺        |  740  | 10148  |  8986  |   29900   |  7103   |  1015  |  2030  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sydney/)     |
+| Tangerang 🇮🇩     | 1,437 | 15,984 | 12,956 |  45,521   | 32,085  | 4,499  | 8,937  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tangerang/)   |
+| Tokyo 🇯🇵         |  764  |  5482  |  4725  |   13839   |  3836   |  549   |  1097  |     [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tokyo/)     |
 
 ### Dataset Construction
 
@@ -63,6 +66,40 @@ To reproduce the Massive-STEPS dataset, follow these steps:
    - The dataset will also be uploaded to Hugging Face Datasets with the specified dataset ID.
 
 ### End-to-End Examples
+
+<details>
+<summary>Bandung 🇮🇩</summary>
+
+#### Download Bandung GeoJSON
+
+```sql
+[out:json];
+relation(13290062);
+out geom;
+```
+
+#### Preprocess Bandung Dataset
+
+```sh
+python src/preprocess_std.py \
+    --std_2013_file semantic-trails/downloads/std_2013.csv \
+    --std_2018_file semantic-trails/downloads/std_2018.csv \
+    --cities_file semantic-trails/cities.csv \
+    --categories_file semantic-trails/categories.csv \
+    --city_geo_json_file data/bandung/bandung_13290062_overpass.geojson \
+    --output_dir data/bandung \
+    --output_file bandung_checkins.csv \
+    --min_checkins 2 --min_trails 3
+```
+
+#### Create Next POI Dataset
+
+```sh
+python src/create_next_poi_dataset.py \
+    --checkins_file data/bandung/beijing_checkins.csv \
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Bandung
+```
+</details>
 
 <details>
 <summary>Beijing 🇨🇳</summary>
@@ -344,6 +381,40 @@ python src/create_next_poi_dataset.py \
 </details>
 
 <details>
+<summary>Palembang 🇮🇩</summary>
+
+#### Download Palembang GeoJSON
+
+```sql
+[out:json];
+relation(10713145);
+out geom;
+```
+
+#### Preprocess Palembang Dataset
+
+```sh
+python src/preprocess_std.py \
+    --std_2013_file semantic-trails/downloads/std_2013.csv \
+    --std_2018_file semantic-trails/downloads/std_2018.csv \
+    --cities_file semantic-trails/cities.csv \
+    --categories_file semantic-trails/categories.csv \
+    --city_geo_json_file data/palembang/palembang_10713145_overpass.geojson \
+    --output_dir data/palembang \
+    --output_file palembang_checkins.csv \
+    --min_checkins 2 --min_trails 3
+```
+
+#### Create Next POI Dataset
+
+```sh
+python src/create_next_poi_dataset.py \
+    --checkins_file data/palembang/beijing_checkins.csv \
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Palembang
+```
+</details>
+
+<details>
 <summary>São Paulo 🇧🇷</summary>
 
 #### Download São Paulo GeoJSON
@@ -449,6 +520,40 @@ python src/create_next_poi_dataset.py \
 </details>
 
 <details>
+<summary>Tangerang 🇮🇩</summary>
+
+#### Download Tangerang GeoJSON
+
+```sql
+[out:json];
+relation(7641583);
+out geom;
+```
+
+#### Preprocess Tangerang Dataset
+
+```sh
+python src/preprocess_std.py \
+    --std_2013_file semantic-trails/downloads/std_2013.csv \
+    --std_2018_file semantic-trails/downloads/std_2018.csv \
+    --cities_file semantic-trails/cities.csv \
+    --categories_file semantic-trails/categories.csv \
+    --city_geo_json_file data/tangerang/tangerang_7641583_overpass.geojson \
+    --output_dir data/tangerang \
+    --output_file tangerang_checkins.csv \
+    --min_checkins 2 --min_trails 3
+```
+
+#### Create Next POI Dataset
+
+```sh
+python src/create_next_poi_dataset.py \
+    --checkins_file data/tangerang/beijing_checkins.csv \
+    --dataset_id CRUISEResearchGroup/Massive-STEPS-Tangerang
+```
+</details>
+
+<details>
 <summary>Tokyo 🇯🇵</summary>
 
 #### Download Tokyo GeoJSON
@@ -489,44 +594,45 @@ python src/create_next_poi_dataset.py \
 
 We also conducted extensive benchmarks on the Massive-STEPS dataset using various models for POI recommendation. The following table summarizes the results of our experiments, reported in Acc@1:
 
-| **Model**    | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tokyo** |
-| ------------ | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :---------------: | :-----------: | :----------: | :--------: | :-------: |
-| **FPMC**     |    0.000    |    0.026     |    0.029    |      0.021      |     0.062     |   0.059    |    0.032     |       0.026       |     0.030     |    0.084     |   0.075    |   0.176   |
-| **RNN**      |    0.085    |    0.077     |    0.049    |      0.087      |     0.059     |   0.075    |    0.061     |       0.064       |     0.097     |    0.055     |   0.080    |   0.133   |
-| **LSTPM**    |    0.127    |    0.142     |    0.099    |      0.180      |     0.091     |   0.151    |    0.099     |       0.099       |     0.158     |    0.099     |   0.141    |   0.225   |
-| **DeepMove** |    0.106    |    0.150     |    0.103    |      0.179      |     0.083     |   0.143    |    0.097     |       0.112       |     0.160     |    0.085     |   0.129    |   0.201   |
-| **GETNext**  |    0.433    |    0.146     |    0.155    |      0.175      |     0.100     |   0.175    |    0.134     |       0.139       |     0.202     |    0.115     |   0.181    |   0.180   |
-| **STHGCN**   |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  | **0.250** |
+| **Model**    | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| ------------ | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **FPMC**     |    0.048    |    0.000    |    0.026     |    0.029    |      0.021      |     0.062     |   0.059    |    0.032     |     0.102     |       0.026       |     0.030     |    0.084     |   0.075    |     0.104     |   0.176   |
+| **RNN**      |    0.062    |    0.085    |    0.077     |    0.049    |      0.087      |     0.059     |   0.075    |    0.061     |     0.049     |       0.064       |     0.097     |    0.055     |   0.080    |     0.087     |   0.133   |
+| **LSTPM**    |    0.110    |    0.127    |    0.142     |    0.099    |      0.180      |     0.091     |   0.151    |    0.099     |     0.114     |       0.099       |     0.158     |    0.099     |   0.141    |     0.154     |   0.225   |
+| **DeepMove** |    0.107    |    0.106    |    0.150     |    0.103    |      0.179      |     0.083     |   0.143    |    0.097     |     0.084     |       0.112       |     0.160     |    0.085     |   0.129    |     0.145     |   0.201   |
+| **GETNext**  |    0.179    |    0.433    |    0.146     |    0.155    |      0.175      |     0.100     |   0.175    |    0.134     |     0.158     |       0.139       |     0.202     |    0.115     |   0.181    |     0.224     |   0.180   |
+| **STHGCN**   |    0.219    |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |   **0.246**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  |   **0.293**   | **0.250** |
+| **UniMove**  |    0.007    |    0.036    |    0.015     |    0.004    |      0.023      |     0.008     |   0.009    |    0.004     |     0.009     |       0.008       |     0.002     |    0.000     |   0.015    |     0.001     |   0.032   |
 
 ### Zero-shot POI Recommendation
 
 We also conducted zero-shot POI recommendation experiments on the Massive-STEPS dataset. The following table summarizes the results of our experiments, reported in Acc@1:
 
-| **Method**   | **Model**                               | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tokyo** |
-| ------------ | --------------------------------------- | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :---------------: | :-----------: | :----------: | :--------: | :-------: |
-| **LLM-Mob**  | **gemini-2.0-flash**                    |    0.115    |    0.080     |    0.100    |      0.095      |     0.060     |   0.130    |    0.095     |       0.090       |     0.130     |    0.055     |   0.060    |   0.140   |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.058    |    0.035     |    0.105    |      0.080      |     0.030     |   0.090    |    0.070     |       0.030       |     0.090     |    0.040     |   0.035    |   0.110   |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.000    |    0.020     |    0.055    |      0.030      |     0.010     |   0.030    |    0.025     |       0.010       |     0.030     |    0.005     |   0.020    |   0.005   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.115    |    0.075     |    0.105    |      0.080      |     0.055     |   0.100    |    0.070     |       0.055       |     0.085     |    0.050     |   0.030    |   0.145   |
-| **LLM-ZS**   | **gemini-2.0-flash**                    |    0.058    |    0.090     |    0.110    |      0.080      |     0.065     |   0.125    |    0.080     |       0.110       |     0.150     |    0.065     |   0.060    |   0.160   |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.038    |    0.040     |    0.065    |      0.050      |     0.040     |   0.080    |    0.050     |       0.045       |     0.095     |    0.045     |   0.045    |   0.120   |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.077    |    0.040     |    0.045    |      0.060      |     0.040     |   0.080    |    0.055     |       0.030       |     0.030     |    0.060     |   0.040    |   0.110   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.096    |    0.045     |    0.105    |      0.070      |     0.050     |   0.080    |    0.075     |       0.065       |     0.075     |    0.050     |   0.045    |   0.110   |
-| **LLM-Move** | **gemini-2.0-flash**                    |    0.096    |  **0.205**   |  **0.295**  |    **0.220**    |   **0.225**   |   0.220    |  **0.235**   |     **0.210**     |   **0.285**   |  **0.170**   | **0.230**  | **0.250** |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |  **0.192**  |    0.175     |    0.115    |      0.160      |     0.110     | **0.230**  |    0.120     |       0.135       |     0.155     |    0.095     |   0.125    | **0.250** |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.058    |    0.015     |    0.015    |      0.010      |     0.040     |   0.005    |    0.035     |       0.040       |     0.045     |    0.020     |   0.055    |   0.030   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.096    |    0.100     |    0.235    |      0.120      |     0.115     |   0.110    |    0.115     |       0.175       |     0.195     |    0.105     |   0.125    |   0.130   |
+| **Method**   | **Model**                               | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| ------------ | --------------------------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **LLM-Mob**  | **gemini-2.0-flash**                    |    0.105    |    0.115    |    0.080     |    0.100    |      0.095      |     0.060     |   0.130    |    0.095     |     0.135     |       0.090       |     0.130     |    0.055     |   0.060    |     0.155     |   0.140   |
+|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.060    |    0.058    |    0.035     |    0.105    |      0.080      |     0.030     |   0.090    |    0.070     |     0.075     |       0.030       |     0.090     |    0.040     |   0.035    |     0.095     |   0.110   |
+|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.010    |    0.000    |    0.020     |    0.055    |      0.030      |     0.010     |   0.030    |    0.025     |     0.005     |       0.010       |     0.030     |    0.005     |   0.020    |     0.020     |   0.005   |
+|              | **gemma-2-9b-it-AWQ-INT4**              |    0.070    |    0.115    |    0.075     |    0.105    |      0.080      |     0.055     |   0.100    |    0.070     |     0.095     |       0.055       |     0.085     |    0.050     |   0.030    |     0.145     |   0.145   |
+| **LLM-ZS**   | **gemini-2.0-flash**                    |    0.095    |    0.058    |    0.090     |    0.110    |      0.080      |     0.065     |   0.125    |    0.080     |     0.130     |       0.110       |     0.150     |    0.065     |   0.060    |     0.145     |   0.160   |
+|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.055    |    0.038    |    0.040     |    0.065    |      0.050      |     0.040     |   0.080    |    0.050     |     0.050     |       0.045       |     0.095     |    0.045     |   0.045    |     0.100     |   0.120   |
+|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.045    |    0.077    |    0.040     |    0.045    |      0.060      |     0.040     |   0.080    |    0.055     |     0.070     |       0.030       |     0.030     |    0.060     |   0.040    |     0.080     |   0.110   |
+|              | **gemma-2-9b-it-AWQ-INT4**              |    0.065    |    0.096    |    0.045     |    0.105    |      0.070      |     0.050     |   0.080    |    0.075     |     0.060     |       0.065       |     0.075     |    0.050     |   0.045    |     0.100     |   0.110   |
+| **LLM-Move** | **gemini-2.0-flash**                    |  **0.225**  |    0.096    |  **0.205**   |  **0.295**  |    **0.220**    |   **0.225**   |   0.220    |  **0.235**   |   **0.260**   |     **0.210**     |   **0.285**   |  **0.170**   | **0.230**  |   **0.200**   | **0.250** |
+|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.100    |  **0.192**  |    0.175     |    0.115    |      0.160      |     0.110     | **0.230**  |    0.120     |     0.130     |       0.135       |     0.155     |    0.095     |   0.125    |     0.175     | **0.250** |
+|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.030    |    0.058    |    0.015     |    0.015    |      0.010      |     0.040     |   0.005    |    0.035     |     0.010     |       0.040       |     0.045     |    0.020     |   0.055    |     0.000     |   0.030   |
+|              | **gemma-2-9b-it-AWQ-INT4**              |    0.175    |    0.096    |    0.100     |    0.235    |      0.120      |     0.115     |   0.110    |    0.115     |     0.210     |       0.175       |     0.195     |    0.105     |   0.125    |     0.125     |   0.130   |
 
 ### Spatiotemporal Classification and Reasoning
 
 We conducted spatiotemporal classification and reasoning experiments on the Massive-STEPS dataset. Specifically, we evaluated the zero-shot performance of LLMs to classify whether a check-in trajectory ended at a weekend (Saturday or Sunday) or a weekday (Monday to Friday). The following table summarizes the results of our experiments, reported in accuracy:
 
-| **Model**            | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tokyo** |
-| -------------------- | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :---------------: | :-----------: | :----------: | :--------: | :-------: |
-| **gemini-2.0-flash** |    0.615    |  **0.715**   |  **0.650**  |    **0.765**    |   **0.635**   |   0.740    |  **0.610**   |     **0.610**     |   **0.730**   |  **0.600**   | **0.550**  |   0.510   |
-| **gpt-4o-mini**      |    0.538    |    0.610     |    0.610    |      0.430      |   **0.635**   | **0.745**  |    0.600     |       0.590       |     0.645     |    0.565     |   0.545    |   0.495   |
-| **gpt-4.1-mini**     |  **0.673**  |    0.615     |    0.600    |      0.690      |     0.585     | **0.745**  |    0.595     |       0.575       |     0.700     |    0.565     |   0.515    |   0.550   |
-| **gpt-5-nano**       |    0.635    |    0.535     |    0.530    |      0.470      |     0.500     |   0.635    |    0.580     |       0.565       |     0.680     |    0.465     |   0.440    | **0.580** |
+| **Model**            | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| -------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **gemini-2.0-flash** |  **0.635**  |    0.615    |  **0.715**   |  **0.650**  |    **0.765**    |   **0.635**   |   0.740    |  **0.620**   |   **0.670**   |     **0.610**     |   **0.730**   |  **0.600**   | **0.550**  |   **0.635**   |   0.510   |
+| **gpt-4o-mini**      |    0.625    |    0.538    |    0.610     |    0.610    |      0.430      |   **0.635**   | **0.745**  |    0.600     |     0.645     |       0.590       |     0.645     |    0.565     |   0.545    |     0.600     |   0.495   |
+| **gpt-4.1-mini**     |    0.585    |  **0.673**  |    0.615     |    0.600    |      0.690      |     0.585     | **0.745**  |    0.595     |     0.605     |       0.575       |     0.700     |    0.565     |   0.515    |     0.620     |   0.550   |
+| **gpt-5-nano**       |    0.570    |    0.635    |    0.535     |    0.530    |      0.470      |     0.500     |   0.635    |    0.580     |     0.560     |       0.565       |     0.680     |    0.465     |   0.440    |     0.520     | **0.580** |
 
 ## 🧪 Replicate Experiments
 
@@ -538,6 +644,7 @@ Our experiments rely on the following libraries:
 - [GETNext](https://github.com/songyangme/GETNext)
 - [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
 - [LibCity](https://github.com/LibCity/Bigscity-LibCity)
+- [UniMove](https://github.com/tsinghua-fib-lab/UniMove)
 
 To reproduce our experiments, clone this repository and its submodules:
 
@@ -547,7 +654,7 @@ cd Massive-STEPS
 git submodule update
 ```
 
-where the submodules are our forks of the original repositories with some modifications to support Massive-STEPS: [GETNext](https://github.com/w11wo/GETNext), [STHGCN](https://github.com/w11wo/Spatio-Temporal-Hypergraph-Model), and [LibCity](https://github.com/w11wo/Bigscity-LibCity). Each of the submodules has its own updated dependencies, as listed in their respective `requirements.txt` files.
+where the submodules are our forks of the original repositories with some modifications to support Massive-STEPS: [GETNext](https://github.com/w11wo/GETNext), [STHGCN](https://github.com/w11wo/Spatio-Temporal-Hypergraph-Model), [LibCity](https://github.com/w11wo/Bigscity-LibCity) and [UniMove](https://github.com/w11wo/UniMove). Each of the submodules has its own updated dependencies, as listed in their respective `requirements.txt` files.
 
 Because the submodules are not installed in the same directory as the main repository, we need to create a softlink for each submodule to point to the `data/` directory. You can do this by running the following commands:
 
@@ -634,6 +741,29 @@ This will run the STHGCN experiments on the specified city. The results will be 
 
 You can refer to `Spatio-Temporal-Hypergraph-Model/run_train.sh` for the full list of cities used in our experiments.
 
+#### UniMove
+
+To run the UniMove experiments, you can use the following command:
+
+```bash
+city=beijing # or istanbul, jakarta, etc.
+
+python preprocess_massive_steps.py --city $city
+
+python main.py \
+    --device cuda:0 \
+    --city $city \
+    --target_city $city \
+    --train_root traj_dataset/massive_steps/train \
+    --val_root traj_dataset/massive_steps/val \
+    --test_root traj_dataset/massive_steps/test \
+    --B 4
+```
+
+This will train UniMove from scratch on the specified city. The results will be saved in the `models/{city}/` directory.
+
+You can refer to `UniMove/run_train.sh` for the full list of cities used in our experiments.
+
 ### Zero-shot POI Recommendation
 
 To run a zero-shot POI recommendation experiment, you can use the following command:
@@ -692,6 +822,7 @@ Our work is based on the following repositories:
 - [GETNext](https://github.com/songyangme/GETNext)
 - [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
 - [LibCity](https://github.com/LibCity/Bigscity-LibCity)
+- [UniMove](https://github.com/tsinghua-fib-lab/UniMove)
 
 ## 🔖 Citation
 

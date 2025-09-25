@@ -7,3 +7,6 @@
 [submodule "Bigscity-LibCity"]
 	path = Bigscity-LibCity
 	url = https://github.com/w11wo/Bigscity-LibCity.git
+[submodule "UniMove"]
+	path = UniMove
+	url = https://github.com/w11wo/UniMove.git
