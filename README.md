@@ -587,7 +587,7 @@ We also conducted extensive benchmarks on the Massive-STEPS dataset using variou
 | **LSTPM**    |    0.110    |    0.127    |    0.142     |    0.099    |      0.180      |     0.091     |   0.151    |    0.099     |     0.114     |       0.099       |     0.158     |    0.099     |   0.141    |     0.154     |   0.225   |
 | **DeepMove** |    0.107    |    0.106    |    0.150     |    0.103    |      0.179      |     0.083     |   0.143    |    0.097     |     0.084     |       0.112       |     0.160     |    0.085     |   0.129    |     0.145     |   0.201   |
 | **GETNext**  |    0.179    |    0.433    |    0.146     |    0.155    |      0.175      |     0.100     |   0.175    |    0.134     |     0.158     |       0.139       |     0.202     |    0.115     |   0.181    |     0.224     |   0.180   |
-| **STHGCN**   |    0.219    |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |   **0.246**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  |   **0.293**   | **0.250** |
+| **STHGCN**   |  **0.219**  |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |   **0.246**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  |   **0.293**   | **0.250** |
 | **UniMove**  |    0.007    |    0.036    |    0.015     |    0.004    |      0.023      |     0.008     |   0.009    |    0.004     |     0.009     |       0.008       |     0.002     |    0.000     |   0.015    |     0.001     |   0.032   |
 
 ### Zero-shot POI Recommendation
@@ -799,13 +799,3 @@ vllm serve Qwen/Qwen2.5-72B-Instruct-AWQ --quantization awq
 ```
 
 and modify `VLLM_API_BASE_URL` and `VLLM_API_KEY` environment variables accordingly, pointing to the server's address.
-
-## 📜 Acknowledgement
-
-Our work is based on the following repositories:
-
-- [AgentMove](https://github.com/tsinghua-fib-lab/agentmove)
-- [GETNext](https://github.com/songyangme/GETNext)
-- [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
-- [LibCity](https://github.com/LibCity/Bigscity-LibCity)
-- [UniMove](https://github.com/tsinghua-fib-lab/UniMove)
