@@ -4,7 +4,7 @@ for city in Bandung Beijing Istanbul Jakarta Kuwait-City Melbourne Moscow New-Yo
     city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
     python src/run_classify_day_llm.py \
-        --dataset_name CRUISEResearchGroup/Massive-STEPS-$city \
+        --dataset_name YOURUSERNAME/Massive-STEPS-$city \
         --num_users 200  \
         --prompt_type st_day_classification \
         --model_name $model \

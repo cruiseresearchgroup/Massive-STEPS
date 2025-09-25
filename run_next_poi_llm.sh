@@ -5,7 +5,7 @@ for prompt_type in llmzs llmmob llmmove; do
         city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
         python src/run_next_poi_llm.py \
-            --dataset_name CRUISEResearchGroup/Massive-STEPS-$city \
+            --dataset_name YOURUSERNAME/Massive-STEPS-$city \
             --num_users 200 --num_historical_stays 15 \
             --prompt_type $prompt_type \
             --model_name $model \
