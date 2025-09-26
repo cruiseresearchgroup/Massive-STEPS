@@ -96,7 +96,7 @@ python src/preprocess_std.py \
 
 ```sh
 python src/create_next_poi_dataset.py \
-    --checkins_file data/bandung/beijing_checkins.csv \
+    --checkins_file data/bandung/bandung_checkins.csv \
     --dataset_id CRUISEResearchGroup/Massive-STEPS-Bandung
 ```
 </details>
@@ -409,7 +409,7 @@ python src/preprocess_std.py \
 
 ```sh
 python src/create_next_poi_dataset.py \
-    --checkins_file data/palembang/beijing_checkins.csv \
+    --checkins_file data/palembang/palembang_checkins.csv \
     --dataset_id CRUISEResearchGroup/Massive-STEPS-Palembang
 ```
 </details>
@@ -548,7 +548,7 @@ python src/preprocess_std.py \
 
 ```sh
 python src/create_next_poi_dataset.py \
-    --checkins_file data/tangerang/beijing_checkins.csv \
+    --checkins_file data/tangerang/tangerang_checkins.csv \
     --dataset_id CRUISEResearchGroup/Massive-STEPS-Tangerang
 ```
 </details>
