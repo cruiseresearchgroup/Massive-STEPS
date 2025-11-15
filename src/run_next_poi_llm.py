@@ -87,12 +87,12 @@ def main(args):
             historical_stays += convert_to_tuple_records(row["inputs"], poi_infos)
             historical_stays += convert_to_tuple_records(row["targets"], poi_infos)
 
-        prompt_template = prompt_generator(args.prompt_type)
-        if args.prompt_type == "llmmove":
+        if args.prompt_type in ("llmmove", "timegeo"):
             kwargs = {"poi_infos": poi_infos, "negative_sample_size": args.negative_sample_size}
         else:
             kwargs = {}
 
+        prompt_template = prompt_generator(args.prompt_type)
         prompt = prompt_template(historical_stays, context_stays, target_stay, **kwargs)
 
         result = llm.generate(prompt)

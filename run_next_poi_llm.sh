@@ -1,6 +1,6 @@
 model=gemini-2.0-flash
 
-for prompt_type in llmzs llmmob llmmove; do
+for prompt_type in llmzs llmmob llmmove timegeo; do
     for city in Bandung Beijing Istanbul Jakarta Kuwait-City Melbourne Moscow New-York Palembang Petaling-Jaya Sao-Paulo Shanghai Sydney Tangerang Tokyo; do
         city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 

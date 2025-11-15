@@ -1,3 +1,4 @@
+from collections import Counter
 import random
 
 from utils import haversine_distance
@@ -12,6 +13,8 @@ def prompt_generator(prompt_type):
         return prompt_generator_llmmove
     elif prompt_type == "st_day_classification":
         return prompt_generator_st_day_classification
+    elif prompt_type == "timegeo":
+        return prompt_generator_timegeo
     else:
         raise ValueError(f"Unknown prompt type: {prompt_type}")
 
@@ -99,6 +102,55 @@ Requirements:
 2. Consider the recent check-ins to extract users' current perferences.
 3. Consider the "Distance" since people tend to visit nearby pois.
 4. Consider which "Category" the user would go next for long-term check-ins indicates sequential transitions the user prefer.
+
+Please organize your answer in a JSON object containing following keys:
+"prediction" (10 distinct POIIDs of the ten most probable places in <candidate set> in descending order of probability), and "reason" (a concise explanation that supports your recommendation according to the requirements). Do not include line breaks in your output.
+"""
+    return prompt
+
+
+def prompt_generator_timegeo(historical_stays, context_stays, target_stay, poi_infos, negative_sample_size):
+    # get historical POI visits
+    poi_visit_counts = Counter()
+    for stay in historical_stays + context_stays:
+        poi_visit_counts[stay[3]] += 1
+
+    # get most recent context stay
+    most_recent_poi_id = context_stays[-1][3]
+    negative_samples = random.sample(sorted(poi_infos.keys()), negative_sample_size)
+    candidate_set = negative_samples + [target_stay[3]]
+    candidates = [
+        (
+            candidate_poi_id,
+            haversine_distance(
+                poi_infos[candidate_poi_id]["latitude"],
+                poi_infos[candidate_poi_id]["longitude"],
+                poi_infos[most_recent_poi_id]["latitude"],
+                poi_infos[most_recent_poi_id]["longitude"],
+            ),
+            poi_infos[candidate_poi_id]["category"],
+            poi_visit_counts.get(candidate_poi_id, 0),
+        )
+        for candidate_poi_id in candidate_set
+    ]
+    candidates.sort(key=lambda x: x[1])  # sort by distance
+
+    prompt = f"""\
+<long-term check-ins> [Format: (POIID, Category)]: {[[item[3], item[2]] for item in historical_stays]}
+<recent check-ins> [Format: (POIID, Category)]: {[[item[3], item[2]] for item in context_stays]}
+<candidate set> [Format: (POIID, Distance, Category, HistoricalVisits)]: {candidates}
+
+Your task is to recommend a user's next point-of-interest (POI) from <candidate set> based on his/her trajectory information.
+The trajectory information is made of a sequence of the user's <long-term check-ins> and a sequence of the user's <recent check-ins> in chronological order.
+Now I explain the elements in the format. "POIID" refers to the unique id of the POI, "Distance" indicates the distance (kilometers) between the user and the POI, and "Category" shows the semantic information of the POI. "HistoricalVisits" indicates how many times the user has visited this POI in his/her historical check-ins.
+
+Requirements:
+1. Consider the long-term check-ins to extract users' long-term preferences since people tend to revisit their frequent visits.
+2. Consider the recent check-ins to extract users' current perferences.
+3. Consider the "Distance" since people tend to visit nearby pois.
+4. Consider which "Category" the user would go next for long-term check-ins indicates sequential transitions the user prefer.
+5. Consider "HistoricalVisits" since people tend to revisit their most frequently visited locations.
+6. Decide whether the user will "return" to one of his/her <most visited locations> or "explore" a new place not in his/her <most visited locations>.
 
 Please organize your answer in a JSON object containing following keys:
 "prediction" (10 distinct POIIDs of the ten most probable places in <candidate set> in descending order of probability), and "reason" (a concise explanation that supports your recommendation according to the requirements). Do not include line breaks in your output.
