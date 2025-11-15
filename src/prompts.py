@@ -150,7 +150,6 @@ Requirements:
 3. Consider the "Distance" since people tend to visit nearby pois.
 4. Consider which "Category" the user would go next for long-term check-ins indicates sequential transitions the user prefer.
 5. Consider "HistoricalVisits" since people tend to revisit their most frequently visited locations.
-6. Decide whether the user will "return" to one of his/her <most visited locations> or "explore" a new place not in his/her <most visited locations>.
 
 Please organize your answer in a JSON object containing following keys:
 "prediction" (10 distinct POIIDs of the ten most probable places in <candidate set> in descending order of probability), and "reason" (a concise explanation that supports your recommendation according to the requirements). Do not include line breaks in your output.
