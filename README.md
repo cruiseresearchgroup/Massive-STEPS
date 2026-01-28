@@ -26,7 +26,7 @@ Massive-STEPS is available on [🤗 Datasets](https://huggingface.co/collections
 
 | City            | Users  | Trails  |  POIs  | Check-ins | #train  |  #val  | #test  |                                          URL                                          |
 | --------------- | :----: | :-----: | :----: | :-------: | :-----: | :----: | :----: | :-----------------------------------------------------------------------------------: |
-| Bandung 🇮🇩       | 3,377  | 55,333  | 29,026 |  161,284  | 113,058 | 16,018 | 32,208 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Bandung/)    |
+| Bandung 🇮🇩       | 3,377  | 55,333  | 29,026 |  161,284  | 38,732  | 5,534  | 11,067 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Bandung/)    |
 | Beijing 🇨🇳       |   56   |   573   | 1,127  |   1,470   |   400   |   58   |  115   |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Beijing/)    |
 | Istanbul 🇹🇷      | 23,700 | 216,411 | 53,812 |  544,471  | 151,487 | 21,641 | 43,283 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Istanbul/)    |
 | Jakarta 🇮🇩       | 8,336  | 137,396 | 76,116 |  412,100  | 96,176  | 13,740 | 27,480 |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Jakarta/)    |
@@ -34,12 +34,12 @@ Massive-STEPS is available on [🤗 Datasets](https://huggingface.co/collections
 | Melbourne 🇦🇺     |  646   |  7,864  | 7,699  |  22,050   |  5,504  |  787   | 1,573  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Melbourne/)   |
 | Moscow 🇷🇺        | 3,993  | 39,485  | 17,822 |  105,620  | 27,639  | 3,949  | 7,897  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Moscow/)     |
 | New York 🇺🇸      | 6,929  | 92,041  | 49,218 |  272,368  | 64,428  | 9,204  | 18,409 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-New-York/)    |
-| Palembang 🇮🇩     |  267   |  4,699  | 4,343  |  14,467   | 10,132  | 1,487  | 2,848  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Palembang/)   |
+| Palembang 🇮🇩     |  267   |  4,699  | 4,343  |  14,467   |  3,289  |  470   |  940   |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Palembang/)   |
 | Petaling Jaya 🇲🇾 | 14,308 | 180,410 | 60,158 |  506,430  | 126,287 | 18,041 | 36,082 | [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Petaling-Jaya/) |
 | São Paulo 🇧🇷     | 5,822  | 89,689  | 38,377 |  256,824  | 62,782  | 8,969  | 17,938 |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sao-Paulo/)   |
 | Shanghai 🇨🇳      |  296   |  3,636  | 4,462  |  10,491   |  2,544  |  364   |  728   |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Shanghai/)    |
 | Sydney 🇦🇺        |  740   | 10,148  | 8,986  |  29,900   |  7,103  | 1,015  | 2,030  |    [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Sydney/)     |
-| Tangerang 🇮🇩     | 1,437  | 15,984  | 12,956 |  45,521   | 32,085  | 4,499  | 8,937  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tangerang/)   |
+| Tangerang 🇮🇩     | 1,437  | 15,984  | 12,956 |  45,521   | 11,188  | 1,599  | 3,197  |   [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tangerang/)   |
 | Tokyo 🇯🇵         |  764   |  5,482  | 4,725  |  13,839   |  3,836  |  549   | 1,097  |     [🤗](https://huggingface.co/datasets/CRUISEResearchGroup/Massive-STEPS-Tokyo/)     |
 
 ### Dataset Construction
