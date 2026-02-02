@@ -10,3 +10,12 @@
 [submodule "UniMove"]
 	path = UniMove
 	url = https://github.com/w11wo/UniMove.git
+[submodule "Flashback"]
+	path = Flashback
+	url = https://github.com/w11wo/Flashback
+[submodule "Graph-Flashback"]
+	path = Graph-Flashback
+	url = https://github.com/w11wo/Graph-Flashback.git
+[submodule "LoTNext"]
+	path = LoTNext
+	url = https://github.com/w11wo/LoTNext.git

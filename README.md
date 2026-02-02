@@ -594,45 +594,54 @@ python src/create_next_poi_dataset.py \
 
 We also conducted extensive benchmarks on the Massive-STEPS dataset using various models for POI recommendation. The following table summarizes the results of our experiments, reported in Acc@1:
 
-| **Model**    | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
-| ------------ | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
-| **FPMC**     |    0.048    |    0.000    |    0.026     |    0.029    |      0.021      |     0.062     |   0.059    |    0.032     |     0.102     |       0.026       |     0.030     |    0.084     |   0.075    |     0.104     |   0.176   |
-| **RNN**      |    0.062    |    0.085    |    0.077     |    0.049    |      0.087      |     0.059     |   0.075    |    0.061     |     0.049     |       0.064       |     0.097     |    0.055     |   0.080    |     0.087     |   0.133   |
-| **LSTPM**    |    0.110    |    0.127    |    0.142     |    0.099    |      0.180      |     0.091     |   0.151    |    0.099     |     0.114     |       0.099       |     0.158     |    0.099     |   0.141    |     0.154     |   0.225   |
-| **DeepMove** |    0.107    |    0.106    |    0.150     |    0.103    |      0.179      |     0.083     |   0.143    |    0.097     |     0.084     |       0.112       |     0.160     |    0.085     |   0.129    |     0.145     |   0.201   |
-| **GETNext**  |    0.179    |    0.433    |    0.146     |    0.155    |      0.175      |     0.100     |   0.175    |    0.134     |     0.158     |       0.139       |     0.202     |    0.115     |   0.181    |     0.224     |   0.180   |
-| **STHGCN**   |  **0.219**  |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |   **0.246**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  |   **0.293**   | **0.250** |
-| **UniMove**  |    0.007    |    0.036    |    0.015     |    0.004    |      0.023      |     0.008     |   0.009    |    0.004     |     0.009     |       0.008       |     0.002     |    0.000     |   0.015    |     0.001     |   0.032   |
+| **Model**           | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| ------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **FPMC**            |    0.048    |    0.000    |    0.026     |    0.029    |      0.021      |     0.062     |   0.059    |    0.032     |     0.102     |       0.026       |     0.030     |    0.084     |   0.075    |     0.104     |   0.176   |
+| **RNN**             |    0.062    |    0.085    |    0.077     |    0.049    |      0.087      |     0.059     |   0.075    |    0.061     |     0.049     |       0.064       |     0.097     |    0.055     |   0.080    |     0.087     |   0.133   |
+| **LSTPM**           |    0.110    |    0.127    |    0.142     |    0.099    |      0.180      |     0.091     |   0.151    |    0.099     |     0.114     |       0.099       |     0.158     |    0.099     |   0.141    |     0.154     |   0.225   |
+| **DeepMove**        |    0.107    |    0.106    |    0.150     |    0.103    |      0.179      |     0.083     |   0.143    |    0.097     |     0.084     |       0.112       |     0.160     |    0.085     |   0.129    |     0.145     |   0.201   |
+| **Flashback**       |    0.103    |    0.278    |    0.137     |    0.113    |      0.150      |     0.079     |   0.121    |    0.086     |     0.135     |       0.072       |     0.159     |    0.096     |   0.127    |     0.185     |   0.170   |
+| **Graph-Flashback** |    0.091    |    0.304    |    0.137     |    0.072    |      0.115      |     0.093     |   0.125    |    0.059     |     0.148     |       0.072       |     0.096     |    0.111     |   0.135    |     0.200     |   0.180   |
+| **LoTNext**         |    0.076    |    0.243    |    0.105     |    0.044    |      0.132      |     0.085     |   0.089    |    0.061     |     0.140     |       0.055       |     0.105     |    0.093     |   0.123    |     0.126     |   0.191   |
+| **GETNext**         |    0.179    |    0.433    |    0.146     |    0.155    |      0.175      |     0.100     |   0.175    |    0.134     |     0.158     |       0.139       |     0.202     |    0.115     |   0.181    |     0.224     |   0.180   |
+| **STHGCN**          |  **0.219**  |  **0.453**  |  **0.241**   |  **0.197**  |    **0.225**    |   **0.168**   | **0.223**  |  **0.146**   |   **0.246**   |     **0.174**     |   **0.250**   |  **0.193**   | **0.227**  |   **0.293**   | **0.250** |
+| **UniMove**         |    0.007    |    0.036    |    0.015     |    0.004    |      0.023      |     0.008     |   0.009    |    0.004     |     0.009     |       0.008       |     0.002     |    0.000     |   0.015    |     0.001     |   0.032   |
 
 ### Zero-shot POI Recommendation
 
 We also conducted zero-shot POI recommendation experiments on the Massive-STEPS dataset. The following table summarizes the results of our experiments, reported in Acc@1:
 
-| **Method**   | **Model**                               | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
-| ------------ | --------------------------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
-| **LLM-Mob**  | **gemini-2.0-flash**                    |    0.105    |    0.115    |    0.080     |    0.100    |      0.095      |     0.060     |   0.130    |    0.095     |     0.135     |       0.090       |     0.130     |    0.055     |   0.060    |     0.155     |   0.140   |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.060    |    0.058    |    0.035     |    0.105    |      0.080      |     0.030     |   0.090    |    0.070     |     0.075     |       0.030       |     0.090     |    0.040     |   0.035    |     0.095     |   0.110   |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.010    |    0.000    |    0.020     |    0.055    |      0.030      |     0.010     |   0.030    |    0.025     |     0.005     |       0.010       |     0.030     |    0.005     |   0.020    |     0.020     |   0.005   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.070    |    0.115    |    0.075     |    0.105    |      0.080      |     0.055     |   0.100    |    0.070     |     0.095     |       0.055       |     0.085     |    0.050     |   0.030    |     0.145     |   0.145   |
-| **LLM-ZS**   | **gemini-2.0-flash**                    |    0.095    |    0.058    |    0.090     |    0.110    |      0.080      |     0.065     |   0.125    |    0.080     |     0.130     |       0.110       |     0.150     |    0.065     |   0.060    |     0.145     |   0.160   |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.055    |    0.038    |    0.040     |    0.065    |      0.050      |     0.040     |   0.080    |    0.050     |     0.050     |       0.045       |     0.095     |    0.045     |   0.045    |     0.100     |   0.120   |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.045    |    0.077    |    0.040     |    0.045    |      0.060      |     0.040     |   0.080    |    0.055     |     0.070     |       0.030       |     0.030     |    0.060     |   0.040    |     0.080     |   0.110   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.065    |    0.096    |    0.045     |    0.105    |      0.070      |     0.050     |   0.080    |    0.075     |     0.060     |       0.065       |     0.075     |    0.050     |   0.045    |     0.100     |   0.110   |
-| **LLM-Move** | **gemini-2.0-flash**                    |  **0.225**  |    0.096    |  **0.205**   |  **0.295**  |    **0.220**    |   **0.225**   |   0.220    |  **0.235**   |   **0.260**   |     **0.210**     |   **0.285**   |  **0.170**   | **0.230**  |   **0.200**   | **0.250** |
-|              | **Qwen2.5-7B-Instruct-AWQ**             |    0.100    |  **0.192**  |    0.175     |    0.115    |      0.160      |     0.110     | **0.230**  |    0.120     |     0.130     |       0.135       |     0.155     |    0.095     |   0.125    |     0.175     | **0.250** |
-|              | **Meta-Llama-3.1-8B-Instruct-AWQ-INT4** |    0.030    |    0.058    |    0.015     |    0.015    |      0.010      |     0.040     |   0.005    |    0.035     |     0.010     |       0.040       |     0.045     |    0.020     |   0.055    |     0.000     |   0.030   |
-|              | **gemma-2-9b-it-AWQ-INT4**              |    0.175    |    0.096    |    0.100     |    0.235    |      0.120      |     0.115     |   0.110    |    0.115     |     0.210     |       0.175       |     0.195     |    0.105     |   0.125    |     0.125     |   0.130   |
+| **Method**   | **Model**                 | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| ------------ | ------------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **LLM-Mob**  | **Gemini 2.0 Flash**      |    0.105    |    0.115    |    0.080     |    0.100    |      0.095      |     0.060     |   0.130    |    0.095     |     0.135     |       0.090       |     0.130     |    0.055     |   0.060    |     0.155     |   0.140   |
+|              | **Qwen 2.5 7B Instruct**  |    0.060    |    0.058    |    0.035     |    0.105    |      0.080      |     0.030     |   0.090    |    0.070     |     0.075     |       0.030       |     0.090     |    0.040     |   0.035    |     0.095     |   0.110   |
+|              | **Llama 3.1 8B Instruct** |    0.010    |    0.000    |    0.020     |    0.055    |      0.030      |     0.010     |   0.030    |    0.025     |     0.005     |       0.010       |     0.030     |    0.005     |   0.020    |     0.020     |   0.005   |
+|              | **Gemma 2 9b it**         |    0.070    |    0.115    |    0.075     |    0.105    |      0.080      |     0.055     |   0.100    |    0.070     |     0.095     |       0.055       |     0.085     |    0.050     |   0.030    |     0.145     |   0.145   |
+| **LLM-ZS**   | **Gemini 2.0 Flash**      |    0.095    |    0.058    |    0.090     |    0.110    |      0.080      |     0.065     |   0.125    |    0.080     |     0.130     |       0.110       |     0.150     |    0.065     |   0.060    |     0.145     |   0.160   |
+|              | **Qwen 2.5 7B Instruct**  |    0.055    |    0.038    |    0.040     |    0.065    |      0.050      |     0.040     |   0.080    |    0.050     |     0.050     |       0.045       |     0.095     |    0.045     |   0.045    |     0.100     |   0.120   |
+|              | **Llama 3.1 8B Instruct** |    0.045    |    0.077    |    0.040     |    0.045    |      0.060      |     0.040     |   0.080    |    0.055     |     0.070     |       0.030       |     0.030     |    0.060     |   0.040    |     0.080     |   0.110   |
+|              | **Gemma 2 9b it**         |    0.065    |    0.096    |    0.045     |    0.105    |      0.070      |     0.050     |   0.080    |    0.075     |     0.060     |       0.065       |     0.075     |    0.050     |   0.045    |     0.100     |   0.110   |
+| **LLM-Move** | **Gemini 2.0 Flash**      |  **0.225**  |    0.096    |  **0.205**   |  **0.295**  |    **0.220**    |   **0.225**   |   0.220    |  **0.235**   |   **0.260**   |     **0.210**     |   **0.285**   |  **0.170**   | **0.230**  |   **0.200**   | **0.250** |
+|              | **Qwen 2.5 7B Instruct**  |    0.100    |  **0.192**  |    0.175     |    0.115    |      0.160      |     0.110     | **0.230**  |    0.120     |     0.130     |       0.135       |     0.155     |    0.095     |   0.125    |     0.175     | **0.250** |
+|              | **Llama 3.1 8B Instruct** |    0.030    |    0.058    |    0.015     |    0.015    |      0.010      |     0.040     |   0.005    |    0.035     |     0.010     |       0.040       |     0.045     |    0.020     |   0.055    |     0.000     |   0.030   |
+|              | **Gemma 2 9b it**         |    0.175    |    0.096    |    0.100     |    0.235    |      0.120      |     0.115     |   0.110    |    0.115     |     0.210     |       0.175       |     0.195     |    0.105     |   0.125    |     0.125     |   0.130   |
 
 ### Spatiotemporal Classification and Reasoning
 
 We conducted spatiotemporal classification and reasoning experiments on the Massive-STEPS dataset. Specifically, we evaluated the zero-shot performance of LLMs to classify whether a check-in trajectory ended at a weekend (Saturday or Sunday) or a weekday (Monday to Friday). The following table summarizes the results of our experiments, reported in accuracy:
 
-| **Model**            | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
-| -------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
-| **gemini-2.0-flash** |  **0.635**  |    0.615    |  **0.715**   |  **0.650**  |    **0.765**    |   **0.635**   |   0.740    |  **0.620**   |   **0.670**   |     **0.610**     |   **0.730**   |  **0.600**   | **0.550**  |   **0.635**   |   0.510   |
-| **gpt-4o-mini**      |    0.625    |    0.538    |    0.610     |    0.610    |      0.430      |   **0.635**   | **0.745**  |    0.600     |     0.645     |       0.590       |     0.645     |    0.565     |   0.545    |     0.600     |   0.495   |
-| **gpt-4.1-mini**     |    0.585    |  **0.673**  |    0.615     |    0.600    |      0.690      |     0.585     | **0.745**  |    0.595     |     0.605     |       0.575       |     0.700     |    0.565     |   0.515    |     0.620     |   0.550   |
-| **gpt-5-nano**       |    0.570    |    0.635    |    0.535     |    0.530    |      0.470      |     0.500     |   0.635    |    0.580     |     0.560     |       0.565       |     0.680     |    0.465     |   0.440    |     0.520     | **0.580** |
+| **Model**                          | **Bandung** | **Beijing** | **Istanbul** | **Jakarta** | **Kuwait City** | **Melbourne** | **Moscow** | **New York** | **Palembang** | **Petaling Jaya** | **São Paulo** | **Shanghai** | **Sydney** | **Tangerang** | **Tokyo** |
+| ---------------------------------- | :---------: | :---------: | :----------: | :---------: | :-------------: | :-----------: | :--------: | :----------: | :-----------: | :---------------: | :-----------: | :----------: | :--------: | :-----------: | :-------: |
+| **Logistic Regression** (*BoW*)    |    0.645    |  **0.750**  |    0.645     |  **0.665**  |    **0.785**    |     0.700     |   0.715    |    0.550     |     0.630     |       0.565       |     0.710     |    0.585     | **0.680**  |     0.625     | **0.595** |
+| **Logistic Regression** (*TF-IDF*) |    0.620    |  **0.750**  |    0.650     |    0.660    |    **0.785**    |     0.705     |   0.720    |    0.555     |     0.665     |       0.560       |   **0.735**   |  **0.600**   |   0.650    |     0.645     |   0.570   |
+| **Random Forest** (*BoW*)          |    0.615    |    0.692    |    0.665     |    0.635    |    **0.785**    |   **0.710**   |   0.740    |    0.570     |   **0.680**   |       0.580       |     0.715     |  **0.600**   |   0.645    |     0.675     |   0.550   |
+| **Random Forest** (*TF-IDF*)       |    0.615    |    0.673    |    0.665     |    0.635    |    **0.785**    |     0.705     |   0.740    |    0.565     |   **0.680**   |       0.590       |     0.715     |  **0.600**   |   0.650    |   **0.685**   |   0.510   |
+| **XGBoost** (*BoW*)                |    0.620    |    0.577    |    0.600     |    0.635    |      0.745      |     0.695     |   0.670    |    0.570     |     0.625     |       0.580       |     0.645     |  **0.600**   |   0.600    |     0.615     |   0.565   |
+| **XGBoost** (*TF-IDF*)             |  **0.660**  |    0.615    |    0.610     |    0.640    |      0.735      |     0.665     |   0.650    |    0.565     |     0.595     |       0.580       |     0.685     |    0.500     |   0.585    |     0.620     |   0.560   |
+| **Gemini 2.0 Flash**               |    0.635    |    0.615    |  **0.715**   |    0.650    |      0.765      |     0.635     |   0.740    |  **0.620**   |     0.670     |     **0.610**     |     0.730     |  **0.600**   |   0.550    |     0.635     |   0.510   |
+| **GPT-4o Mini**                    |    0.625    |    0.538    |    0.610     |    0.610    |      0.430      |     0.635     | **0.745**  |    0.600     |     0.645     |       0.590       |     0.645     |    0.565     |   0.545    |     0.600     |   0.495   |
+| **GPT-4.1 Mini**                   |    0.585    |    0.673    |    0.615     |    0.600    |      0.690      |     0.585     | **0.745**  |    0.595     |     0.605     |       0.575       |     0.700     |    0.565     |   0.515    |     0.620     |   0.550   |
+| **GPT-5 Nano**                     |    0.570    |    0.635    |    0.535     |    0.530    |      0.470      |     0.500     |   0.635    |    0.580     |     0.560     |       0.565       |     0.680     |    0.465     |   0.440    |     0.520     |   0.580   |
 
 ## 🧪 Replicate Experiments
 
@@ -645,6 +654,10 @@ Our experiments rely on the following libraries:
 - [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
 - [LibCity](https://github.com/LibCity/Bigscity-LibCity)
 - [UniMove](https://github.com/tsinghua-fib-lab/UniMove)
+- [Flashback](https://github.com/eXascaleInfolab/Flashback_code)
+- [Graph-Flashback](https://github.com/kevin-xuan/Graph-Flashback)
+  - [KGE](https://github.com/kevin-xuan/KGE)
+- [LoTNext](https://github.com/Yukayo/LoTNext)
 
 To reproduce our experiments, clone this repository and its submodules:
 
@@ -662,9 +675,13 @@ Because the submodules are not installed in the same directory as the main repos
 ln -s $(pwd)/data $(pwd)/GETNext/data
 ln -s $(pwd)/data $(pwd)/Spatio-Temporal-Hypergraph-Model/data
 ln -s $(pwd)/data $(pwd)/Bigscity-LibCity/data
+ln -s $(pwd)/data $(pwd)/UniMove/data
+ln -s $(pwd)/data $(pwd)/Flashback/data
+ln -s $(pwd)/data $(pwd)/Graph-Flashback/data
+ln -s $(pwd)/data $(pwd)/LoTNext/data
 ```
 
-### POI Recommendation
+### Task 1: POI Recommendation
 
 #### FPMC, RNN, LSTPM, DeepMove
 
@@ -764,7 +781,111 @@ This will train UniMove from scratch on the specified city. The results will be 
 
 You can refer to `UniMove/run_train.sh` for the full list of cities used in our experiments.
 
-### Zero-shot POI Recommendation
+#### Flashback
+
+To run the Flashback experiments, you can use the following command:
+
+```bash
+city=beijing # or istanbul, jakarta, etc.
+python train.py \
+    --dataset_train_file data/$city/${city}_checkins_train.csv \
+    --dataset_val_file data/$city/${city}_checkins_validation.csv \
+    --dataset_test_file data/$city/${city}_checkins_test.csv \
+    --city $city \
+    --batch-size 10 # 100 for other cities
+```
+
+This will train Flashback on the specified city. The results will be saved in the `log/{city}/` directory.
+
+You can refer to `Flashback/run_train.sh` for the full list of cities used in our experiments.
+
+#### Graph-Flashback
+
+Training Graph-Flashback requires a pre-trained KGE model, whose training requires data preprocessing to construct triplets. First, generate the triplets using the following command:
+
+```bash
+city=beijing # or istanbul, jakarta, etc.
+python KGE/generate_triplet.py \
+    --dataset_train_file data/${city}/${city}_checkins_train.csv \
+    --dataset_val_file data/${city}/${city}_checkins_validation.csv \
+    --dataset_test_file data/${city}/${city}_checkins_test.csv \
+    --city $city
+
+python KGE/refine.py --city $city
+```
+
+To run for all cities, you can run the `Graph-Flashback/run_preprocess.sh` script.
+
+Second, train the KGE model using the following command:
+
+```bash
+python KGE-Graph-Flashback/run_knowledge_representation.py \
+    -model_type transe \
+    -dataset $city \
+    -batch_size 1024 -optimizer_type Adam \
+    -version ${city}_scheme2
+```
+
+This will train the KGE model on the specified city. The results will be saved in the `KGE-Graph-Flashback/log/` directory. To run for all cities, you can run the `KGE-Graph-Flashback/run_train_kge.sh` script.
+
+Third, construct transition graphs based on the learned KGEs using the following command:
+
+```bash
+python KGE/construct_loc_loc_graph.py \
+    --model_type transe \
+    --dataset $city \
+    --pretrain_model ../KGE-Graph-Flashback/log/$city-transe.ckpt \
+    --version scheme2 \
+    --dataset_train_file data/${city}/${city}_checkins_train.csv \
+    --dataset_val_file data/${city}/${city}_checkins_validation.csv \
+    --dataset_test_file data/${city}/${city}_checkins_test.csv
+
+python KGE/construct_user_loc_graph.py \
+    --model_type transe \
+    --dataset $city \
+    --pretrain_model ../KGE-Graph-Flashback/log/$city-transe.ckpt \
+    --version scheme2 \
+    --dataset_train_file data/${city}/${city}_checkins_train.csv \
+    --dataset_val_file data/${city}/${city}_checkins_validation.csv \
+    --dataset_test_file data/${city}/${city}_checkins_test.csv
+```
+
+To run for all cities, you can run the `Graph-Flashback/run_construct_graphs.sh` script.
+
+Finally, train Graph-Flashback using the following command:
+
+```bash
+python train.py \
+    --dataset_train_file data/$city/${city}_checkins_train.csv \
+    --dataset_val_file data/$city/${city}_checkins_validation.csv \
+    --dataset_test_file data/$city/${city}_checkins_test.csv \
+    --city $city \
+    --trans_loc_file POI_graph/${city}_scheme2_transe_loc_temporal_20.pkl \
+    --trans_interact_file POI_graph/${city}_scheme2_transe_user-loc_20.pkl \
+    --batch-size 10 # 100 for other cities
+```
+
+This will train Graph-Flashback on the specified city. The results will be saved in the `log/{city}/` directory. To run for all cities, you can run the `Graph-Flashback/run_train.sh` script.
+
+#### LoTNext
+
+Training LoTNext also requires a pre-trained KGE model. You can use the same KGE model trained for [Graph-Flashback](#graph-flashback) above. To run LoTNext, you can use the following command:
+
+```bash
+city=beijing # or istanbul, jakarta, etc.
+python train.py \
+    --dataset_train_file data/$city/${city}_checkins_train.csv \
+    --dataset_val_file data/$city/${city}_checkins_validation.csv \
+    --dataset_test_file data/$city/${city}_checkins_test.csv \
+    --city $city \
+    --trans_loc_file POI_graph/${city}_scheme2_transe_loc_temporal_20.pkl \
+    --trans_interact_file POI_graph/${city}_scheme2_transe_user-loc_20.pkl \
+    --batch-size 10 # 100 for other cities
+```
+
+This will train LoTNext on the specified city. The results will be saved in the `log/{city}/` directory. To run for all cities, you can run the `LoTNext/run_train.sh` script.
+
+### Task 2: Zero-shot POI Recommendation
 
 To run a zero-shot POI recommendation experiment, you can use the following command:
 
@@ -786,7 +907,7 @@ This will run the zero-shot POI recommendation experiment using the specified mo
 
 You can refer to the `run_next_poi_llm.sh` script to see the full list of models and prompt types used in our experiments. The script will run the zero-shot POI recommendation experiment for each model and prompt type on all cities in the Massive-STEPS dataset.
 
-### Spatiotemporal Classification and Reasoning
+### Task 3: Spatiotemporal Classification and Reasoning
 
 To run a spatiotemporal classification and reasoning experiment, you can use the following command:
 
@@ -803,6 +924,31 @@ python src/run_classify_day_llm.py \
     --city $city \
     --checkins_file data/$city_key/${city_key}_checkins.csv # path to the check-in data
 ```
+
+This will run the spatiotemporal classification and reasoning experiment using the specified model on the specified city. The results will be saved in the `results/{dataset_name}/{model_name}/{prompt_type}/` directory.
+
+You can refer to the `run_classify_day_llm.sh` script to see the full list of models used in our experiments. The script will run the spatiotemporal classification and reasoning experiment for each model on all cities in the Massive-STEPS dataset.
+
+To run classical ML baselines, you can use the following command:
+
+```bash
+city=Beijing # Istanbul, Jakarta, etc.
+city_key=$(echo "$city" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+model=logistic_regression # or random_forest, xgboost
+vectorizer=tfidf # or bow
+
+python src/run_classify_day_classical.py \
+    --dataset_name CRUISEResearchGroup/Massive-STEPS-$city \
+    --num_users 200  \
+    --vectorizer $vectorizer \
+    --model_name $model \
+    --city $city \
+    --checkins_file data/$city_key/${city_key}_checkins.csv
+```
+
+This will run the spatiotemporal classification experiment using the specified classical ML model and vectorizer on the specified city. The results will be saved in the `results/{dataset_name}/classical/st_day_classification/{model_name}/{vectorizer}/` directory.
+
+You can refer to the `run_classify_day_classical.sh` script to see the full list of models and vectorizers used in our experiments. The script will run the spatiotemporal classification for each model and vectorizer on all cities in the Massive-STEPS dataset.
 
 #### Hosting LLMs
 
