@@ -969,6 +969,10 @@ Our work is based on the following repositories:
 - [STHGCN](https://github.com/alipay/Spatio-Temporal-Hypergraph-Model/)
 - [LibCity](https://github.com/LibCity/Bigscity-LibCity)
 - [UniMove](https://github.com/tsinghua-fib-lab/UniMove)
+- [Flashback](https://github.com/eXascaleInfolab/Flashback_code)
+- [Graph-Flashback](https://github.com/kevin-xuan/Graph-Flashback)
+- [KGE](https://github.com/kevin-xuan/KGE)
+- [LoTNext](https://github.com/Yukayo/LoTNext)
 
 ## 🔖 Citation
 
