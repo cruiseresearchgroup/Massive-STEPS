@@ -12,6 +12,8 @@ def prompt_generator(prompt_type):
         return prompt_generator_llmmove
     elif prompt_type == "st_day_classification":
         return prompt_generator_st_day_classification
+    elif prompt_type == "st_day_classification_with_name":
+        return prompt_generator_st_day_classification_with_name
     else:
         raise ValueError(f"Unknown prompt type: {prompt_type}")
 
@@ -114,6 +116,28 @@ start_time: the start time of the check-in in 12h clock format.
 poi_category: the category of the point of interest (POI) visited during the check-in
 
 The trajectory is as follows: {[[item[0], item[2]] for item in trajectory]}
+
+Your task is to classify whether the last check-in occurs on a weekday or a weekend.
+Consider the temporal information (i.e., start_time) of the trajectory, which is important because people's activity varies during different time (e.g., nighttime versus daytime).
+Consider the POI categories, which can provide insights into the user's activity patterns.
+Also consider the city context, as different cities may have different cultural and social norms that influence activity patterns. The city is: {city}.
+
+Please organize your answer in a JSON object containing following keys:
+"prediction" ("weekday" or "weekend") and "reason" (a concise explanation that supports your prediction).
+Do not include line breaks in your output.
+"""
+    return prompt
+
+def prompt_generator_st_day_classification_with_name(context_stays, target_stay, city, poi_infos, **kwargs):
+    trajectory = context_stays + [target_stay]
+    venue_names = [poi_infos[item[3]]["name"] for item in trajectory]
+    prompt = f"""\
+A trajectory is a sequence of check-ins, each represented as (start_time, poi_category, poi_name). The detailed explanation of each element is as follows:
+start_time: the start time of the check-in in 12h clock format.
+poi_category: the category of the point of interest (POI) visited during the check-in
+poi_name: the name of the point of interest (POI) visited during the check-in.
+
+The trajectory is as follows: {[[item[0], item[2], venue_names[i]] for i, item in enumerate(trajectory)]}
 
 Your task is to classify whether the last check-in occurs on a weekday or a weekend.
 Consider the temporal information (i.e., start_time) of the trajectory, which is important because people's activity varies during different time (e.g., nighttime versus daytime).

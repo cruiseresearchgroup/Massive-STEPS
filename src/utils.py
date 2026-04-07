@@ -59,5 +59,6 @@ def get_poi_infos(checkins_file):
                     "latitude": float(row["venue_city_latitude"]),
                     "longitude": float(row["venue_city_longitude"]),
                     "category": row["venue_category"],
+                    "name": row["name"],
                 }
     return poi_infos

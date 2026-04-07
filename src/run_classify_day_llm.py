@@ -87,7 +87,7 @@ def main(args):
         target_stay = convert_to_tuple_records(test_trajectory["targets"], poi_infos)[0]
 
         prompt_template = prompt_generator(args.prompt_type)
-        prompt = prompt_template(context_stays, target_stay, city=args.city)
+        prompt = prompt_template(context_stays, target_stay, city=args.city, poi_infos=poi_infos)
 
         result = llm.generate(prompt, response_format=response_format, **kwargs)
         result["prediction"] = [result["prediction"]]
