@@ -48,6 +48,15 @@ class Gemini(LLM):
         )
 
 
+class Claude(LLM):
+    def __init__(self, model: str = "claude-haiku-4-5-20251001"):
+        self.model = model
+        self.client = OpenAI(
+            api_key=os.getenv("ANTHROPIC_API_KEY"),
+            base_url="https://api.anthropic.com/v1",
+        )
+
+
 class vLLM(LLM):
     def __init__(self, model: str):
         self.model = model
