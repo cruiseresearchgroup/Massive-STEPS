@@ -7,7 +7,7 @@ from tqdm.contrib.concurrent import thread_map
 import numpy as np
 
 from prompts import prompt_generator
-from llm import Gemini, vLLM
+from llm import Claude, Gemini, vLLM
 from utils import convert_to_tuple_records, get_poi_infos
 
 
@@ -56,6 +56,8 @@ def main(args):
 
     if "gemini" in args.model_name:
         llm = Gemini(model=args.model_name)
+    elif "claude" in args.model_name:
+        llm = Claude(model=args.model_name)
     else:
         llm = vLLM(model=args.model_name)
 

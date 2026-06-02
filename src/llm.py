@@ -56,6 +56,36 @@ class Claude(LLM):
             base_url="https://api.anthropic.com/v1",
         )
 
+    def generate(self, prompt: str, response_format: BaseModel = None, **kwargs) -> dict:
+        if response_format is None:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=kwargs.pop("temperature", 0.0),
+                max_tokens=kwargs.pop("max_completion_tokens", 1000),
+                **kwargs,
+            )
+            content = response.choices[0].message.content
+            content = content.strip()
+            if content.startswith("```"):
+                content = content.split("```")[1]
+                if content.startswith("json"):
+                    content = content[4:]
+            return json.loads(content.strip())
+        elif response_format and issubclass(response_format, BaseModel):
+            response = self.client.beta.chat.completions.parse(
+                model=self.model,
+                response_format=response_format,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=kwargs.pop("temperature", 0.0),
+                max_completion_tokens=kwargs.pop("max_completion_tokens", 1000),
+                **kwargs,
+            )
+            result = response.choices[0].message.parsed.dict()
+            return result
+        else:
+            raise ValueError("response_format must be a pydantic BaseModel or None")
+
 
 class vLLM(LLM):
     def __init__(self, model: str):

@@ -47,7 +47,7 @@ def main(args):
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / args.output_file
 
-    fsq_ds = load_dataset("foursquare/fsq-os-places", "places", split="train", revision="14e55a71b1c8a2e6871cd13e2b8490ba388cb72b")
+    fsq_ds = load_dataset("foursquare/fsq-os-places", "places", split="train")
     keep_columns = ["fsq_place_id", "name", "latitude", "longitude", "address"]
     fsq_ds = fsq_ds.remove_columns(list(set(fsq_ds.column_names) - set(keep_columns)))
 
